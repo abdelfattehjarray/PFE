@@ -1,0 +1,44 @@
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MoHNlxAqnBiq4vXBMoiCZG50jDWBkuTqUWBjF8aAuARoIWJUoAx77zInEjRU9phH" crossorigin="anonymous">
+</head>
+<body>
+
+  <div class="container mt-3">
+    <h2>File Upload</h2>
+    <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
+        
+      <div class="form-group">
+        <label for="fileType">File Type:</label>
+        <select class="form-select" id="fileType" name="fileType">
+          <option value="pdf">PDF</option>
+          <option value="image">Image</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="filelang">File Type:</label>
+        <select class="form-select" id="filelang" name="filelang">
+          <option value="ar">arabe</option>
+          <option value="fra">francais</option>
+          <option value="ara+fra">arabe+francais</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="uploadFile">Choose File:</label>
+        <input type="file" class="form-control" id="uploadFile" name="uploadFile" accept=".pdf,.jpg,.jpeg,.png">
+        <small class="form-text text-muted">Accepted formats: PDF, JPG, JPEG, PNG</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-KDLiruAlonsoQkCLu67TmrqTAzUxkTacLcuYnqrZPrWdBsmQ1gOgQjzLuyXN2dkzZ" crossorigin="anonymous"></script>
+  {% endblock %}
+</body>
+</html>
