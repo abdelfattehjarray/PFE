@@ -43,4 +43,14 @@ for column_data in table_data:
        print(data)
    print("--------")
 
+d=""
+b=0
+print("-------------------------------")
+for a in table_data[4]:
+    d=d+"\n"+a #print(a)
+    b = b+1 
+#print (table_data[3])
+print(b)
+print("d----"+ d)
+#print(table_data[4])
 """
