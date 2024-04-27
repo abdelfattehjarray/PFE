@@ -39,11 +39,13 @@ def upload(request):
         name = pdf.extract_remaining_text_from_list(ftext, ":االسم واللقب أو االسم االجتماعي")
         address = pdf.extract_remaining_text_from_list(ftext, ":العنوان")
         sujet = pdf.extract_remaining_text_from_list(ftext, "موضوع الطلب:")
+        consultation=pdf.extract_remaining_text_from_list(ftext, "consultation").strip()
+
 
         # Check if Fournisseur already exists
         fournisseur, created = Fournisseur.objects.get_or_create(
             identificateur=identificateur,
-            defaults={'name': name, 'address': address, 'sujet': sujet}
+            defaults={'name': name, 'address': address, 'sujet': sujet, 'consultation':consultation}
         )
 
         # Extract Produit data

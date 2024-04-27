@@ -13,6 +13,7 @@ class Fournisseur(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200)
     sujet = models.TextField(max_length=5000)
+    consultation=models.CharField( max_length=50,null=True)
 
 class Produit(models.Model):
     name = models.CharField(max_length=20)
