@@ -75,12 +75,16 @@ def upload(request):
 
         # Extract BonCommande data
         date = pdf.extract_remaining_text_from_list(ftext, "المزود").strip()
+        numero=pdf.extract_remaining_text_from_list(ftext, "عدد").strip()
         # Create BonCommande
         BonCommande.objects.create(
             date=date,
             fournisseur=fournisseur,
-            id_commande=commande
+            id_commande=commande,
+            numero=numero
         )
+
+
 
         return HttpResponse("Code executed successfully.")
 

@@ -19,7 +19,7 @@ class Produit(models.Model):
     characteristic = models.TextField(max_length=5000)
 
 class BonCommande(models.Model):
-    
+    numero=models.CharField( max_length=10, null=True)
     date = models.CharField(max_length=15)
     fournisseur = models.ForeignKey('Fournisseur', on_delete=models.CASCADE)
     id_commande = models.ForeignKey('Commande', on_delete=models.CASCADE)
