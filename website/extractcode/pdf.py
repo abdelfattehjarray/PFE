@@ -54,4 +54,7 @@ def extract_remaining_text_from_list(lines, word):
            
     return remaining_text
 
+a=extract_remaining_text_from_list(lines,":الهاتف 392600 75 الفاكس 392421 75 المعرف الجبائي")
+print(a)
+print("-----------------")
 #rtext=extract_remaining_text_from_list(lines,":العنوان")

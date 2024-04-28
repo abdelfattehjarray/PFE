@@ -75,17 +75,40 @@ def upload(request):
             id_produit=produit
         )
 
+        #Extract client data
+        Cname = "كلية العلوم بقابس"
+        Caddress = pdf.extract_remaining_text_from_list(ftext, "mail@fsg.rnu.tn").strip()
+        Cmail = pdf.extract_remaining_text_from_list(ftext, Caddress).strip()
+        Cphone = "75392600"
+        Cfax = "75392421"
+        Ctax_id = pdf.extract_remaining_text_from_list(ftext,":الهاتف 392600 75 الفاكس 392421 75 المعرف الجبائي")
+
+        #Check if Client already exists
+        client, created = Client.objects.get_or_create(
+            name=Cname,
+            address=Caddress,
+            mail=Cmail,
+            phone=Cphone,
+            fax=Cfax,
+            tax_id=Ctax_id
+            
+        )
+
+
+
         # Extract BonCommande data
         date = pdf.extract_remaining_text_from_list(ftext, "المزود").strip()
         numero=pdf.extract_remaining_text_from_list(ftext, "عدد").strip()
         # Create BonCommande
         BonCommande.objects.create(
             date=date,
+            id_client=client,
             fournisseur=fournisseur,
             id_commande=commande,
             numero=numero
         )
 
+        
 
 
         return HttpResponse("Code executed successfully.")
