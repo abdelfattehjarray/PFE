@@ -13,6 +13,12 @@ def home(request):
     return render(request, 'home.html', {} )
 
 
+
+def User(request):
+
+    return render(request, 'User.html', {} )
+
+
 from django.shortcuts import render, get_object_or_404
 from .models import Fournisseur, Produit, Commande, BonCommande
 from .extractcode import pdf, tablepdf
