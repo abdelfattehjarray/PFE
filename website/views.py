@@ -7,6 +7,10 @@ from django.shortcuts import render, get_object_or_404
 
 
 
+def home1(request):
+
+    return render(request, 'home1.html', {} )
+
 
 def home(request):
 
