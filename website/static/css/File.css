@@ -1,0 +1,401 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body{
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  background: #000000;
+  
+
+}
+
+/* menu*/
+
+
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  width:100%;
+  
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex; /* Keep horizontal layout on larger screens */
+}
+
+.navbar li {
+  padding: 0 1rem;
+  position: relative;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.navbar a.newfile {
+  color:#00ffff; 
+}
+
+
+.navbar a:hover {
+  color: #00ffff;
+}
+
+
+.navbar li .nested-menu {
+  display: none;
+}
+
+.nested-menu {
+  display: block;
+  position: absolute;
+  background-color: none;
+  min-width: 190px;
+  z-index: 1;
+  left: 0%;
+  padding-top: 20px;
+}
+
+
+
+.navbar li:hover .nested-menu {
+  display: block;
+}
+
+.nested-menu a {
+  color: #fff;
+  padding: 0.5rem 1rem;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+}
+
+.nested-menu a:hover {
+  color: #00ffff;
+}
+
+
+.logo img{
+  padding-left: 0%;
+  height: 60%;
+}
+
+.menubar {
+  padding-top: 10px;
+  right: 5%;
+}
+
+.navbar li.active:after { 
+  content: '';
+  display: inline-block;
+  color: white;
+  margin-bottom: 3px;
+  border: solid ;
+  border-width: 0 1px 1px 0;
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  margin-left: 2px;
+}
+
+#check{
+  display: none;
+}
+
+.icons {
+  position: absolute;
+  font-size: 2.8rem;  
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+@media  (max-width: 992px) {
+
+  .body .navbar{
+      padding: 1.3rem 5%;
+  }
+  .icons {
+      position: absolute;
+      font-size: 2.8rem;  
+      color: white;
+      cursor: pointer;
+      display: none;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+
+  #check:checked~.icons #menu-icon{
+      display: none;
+  }
+  .icons {
+    right: 5%;
+    position: absolute;
+    font-size: 2.8rem;
+    color: white;
+    cursor: pointer;
+    display: block;
+  }
+  .icons #close-icon{
+      display: none;
+  }
+
+  #check:checked~.icons #close-icon{
+      display: block;
+  }
+
+  .menubar {
+    position: absolute;
+    top: 15%;
+    left: 50%; /* Adjust the left position to center the menu */
+    transform: translateX(-50%); /* Move the menu to the right */
+    width: 100%;
+    height: 50rem;
+    display: none;
+    overflow: hidden;
+    transition: 0.3s ease;
+    background-color: #000;
+  }
+
+ 
+  
+
+  #check:checked~.menubar{
+      display: block;
+  }
+
+  .navbar .menubar ul {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+
+  .navbar .menubar li {
+    padding: 1rem 0;
+  }
+
+  .menubar a {
+      font-size: large;
+
+  }
+
+  .nested-menu a {
+    color: #fff;
+    display: block;
+    margin: -0.8rem 0;
+    font-size: larger;
+    
+  
+  }
+
+  .nm{
+ 
+      text-align: center;
+      padding-left: 17%;
+      width: 100%;
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*file uploader*/
+
+::selection{
+  color: #fff;
+  background: #000000;
+}
+.wrapper{
+  
+  width: 430px;
+  background: #fff;
+  border-radius: 5px;
+  padding: 30px;
+  margin: 0 auto;
+  box-shadow: 7px 7px 12px rgba(0,0,0,0.05);
+}
+.wrapper header{
+  color: #000000;
+  font-size: 27px;
+  font-weight: 600;
+  text-align: center;
+}
+.wrapper form{
+  height: 167px;
+  display: flex;
+  cursor: pointer;
+  margin: 30px 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 2px dashed #000000;
+}
+form :where(i, p){
+  color: #000000;
+}
+form i{
+  font-size: 50px;
+}
+form p{
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+section .row{
+  margin-bottom: 10px;
+  background: #E9F0FF;
+  list-style: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+section .row i{
+  color: #000000;
+  font-size: 30px;
+}
+section .details span{
+  font-size: 14px;
+}
+.progress-area .row .content{
+  width: 100%;
+  margin-left: 15px;
+}
+.progress-area .details{
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+  justify-content: space-between;
+}
+.progress-area .content .progress-bar{
+  height: 6px;
+  width: 100%;
+  margin-bottom: 4px;
+  background: #fff;
+  border-radius: 30px;
+}
+.content .progress-bar .progress{
+  height: 100%;
+  width: 0%;
+  background: #000000;
+  border-radius: inherit;
+}
+.uploaded-area{
+  max-height: 232px;
+  overflow-y: scroll;
+}
+.uploaded-area.onprogress{
+  max-height: 150px;
+}
+.uploaded-area::-webkit-scrollbar{
+  width: 0px;
+}
+.uploaded-area .row .content{
+  display: flex;
+  align-items: center;
+}
+.uploaded-area .row .details{
+  display: flex;
+  margin-left: 15px;
+  flex-direction: column;
+}
+.uploaded-area .row .details .size{
+  color: #404040;
+  font-size: 11px;
+}
+.uploaded-area i.fa-check{
+  font-size: 16px;
+}
+
+
+
+/* CSS */
+.submit {
+  appearance: none;
+  background-color: #000000;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 110;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 40%;
+  will-change: transform;
+}
+
+.submit:disabled {
+  pointer-events: none;
+}
+
+.submit:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+  border: 2px solid #1A1A1A;
+  background-color: white;
+  color: black;
+}
+
+.submit:active {
+  box-shadow: none;
+  transform: translateY(0);
+}

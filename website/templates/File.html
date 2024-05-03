@@ -1,0 +1,86 @@
+{% load static %}
+
+{% block content %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'css/File.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+
+
+  <title>File Upload with Progress Bar | CodingNepal</title>
+
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo"><img src="static/images/logo.png"/></div>
+
+    <input type="checkbox" id="check">
+    <label for="check" class="icons">
+        <i class="bx bx-menu" id="menu-icon"></i>
+        <i class="bx bx-x" id="close-icon"></i>
+    </label>
+
+
+    <div class="menubar">
+         <ul class="mbar">
+             <li  ><a href="#" class="newfile">New FIle</a></li>
+             <li ><a href="#">User Managements</a> </li>
+             <li class="active">
+                 <a href="#">Data Managements</a>
+
+                  
+                    <ul class="nested-menu">
+                        <div class="nm">
+                           <li></li>
+                           <li><a href="#">Bon Commandes</a></li>
+                           <li><a href="#">Fournisseurs</a></li>
+                        </div>
+                    </ul>
+                
+              </li>
+              <li><a href="#"></a></li>
+         </ul>
+     </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="wrapper">
+    <header>File Uploader JavaScript</header>
+    <form action="{% url 'File' %}">{% csrf_token %}
+      <input class="file-input" type="file" name="file" hidden>
+      <i class="fas fa-cloud-upload-alt"></i>
+      <p>Browse File to Upload</p>
+      
+    </form>
+    <section class="progress-area"></section>
+    <section class="uploaded-area"></section>
+    <br>
+    <button class="submit" role="submit">extract</button>
+
+
+  </div>
+
+  <script src="{% static 'js/File.js' %}"></script>
+  {% endblock %}
+</body>
+</html>
+
+

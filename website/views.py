@@ -1,11 +1,10 @@
-from django.shortcuts import render
 from .models import Client, Fournisseur, BonCommande,Produit, Commande
-from .extractcode import pdf
-from .extractcode import tablepdf
+from .extractcode import pdf, tablepdf
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
-
+def File(request):
+    return render(request, 'File.html', {})
 
 def home1(request):
 
@@ -22,11 +21,6 @@ def User(request):
 
     return render(request, 'User.html', {} )
 
-
-from django.shortcuts import render, get_object_or_404
-from .models import Fournisseur, Produit, Commande, BonCommande
-from .extractcode import pdf, tablepdf
-from django.http import HttpResponse
 
 def upload(request):
     if request.method == 'POST':
