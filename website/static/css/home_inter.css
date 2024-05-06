@@ -170,7 +170,7 @@ body {
   
     .menubar {
       position: absolute;
-      top: 15%;
+      top: 60%;
       left: 50%; /* Adjust the left position to center the menu */
       transform: translateX(-50%); /* Move the menu to the right */
       width: 100%;
@@ -207,17 +207,12 @@ body {
       color: #fff;
       display: block;
       margin: -0.8rem 0;
-      font-size: larger;
+      font-size: medium;
       
     
     }
 
-    .nm{
-   
-        text-align: center;
-        padding-left: 17%;
-        width: 100%;
-    }
+    
   
 
   }

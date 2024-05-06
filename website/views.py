@@ -2,29 +2,12 @@ from .models import Client, Fournisseur, BonCommande,Produit, Commande
 from .extractcode import pdf, tablepdf
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 
 def File(request):
-    return render(request, 'File.html', {})
-
-def home1(request):
-
-    return render(request, 'home1.html', {} )
-
-
-def home(request):
-
-    return render(request, 'home.html', {} )
-
-
-
-def User(request):
-
-    return render(request, 'User.html', {} )
-
-
-def upload(request):
     if request.method == 'POST':
-        upload_file = request.FILES['uploadFile']
+        upload_file = request.FILES['file']
+        
         encodings_to_try = ['utf-8', 'utf-16', 'latin-1', 'cp1256']
 
         for encoding in encodings_to_try:
@@ -47,20 +30,25 @@ def upload(request):
 
 
         # Check if Fournisseur already exists
+        """
         fournisseur, created = Fournisseur.objects.get_or_create(
             identificateur=identificateur,
             defaults={'name': name, 'address': address, 'sujet': sujet, 'consultation':consultation}
         )
+        """
 
         # Extract Produit data
         produit_name = table_data[4][0]
         produit_characteristic = "\n".join(table_data[4])
+
+        """
 
         # Check if Produit already exists
         produit, created = Produit.objects.get_or_create(
             name=produit_name,
             characteristic=produit_characteristic
         )
+        """
 
         # Extract Commande data
         unity = table_data[3]
@@ -68,6 +56,9 @@ def upload(request):
         price_ind = "\n".join(table_data[1][:-1])
         price_tt = "\n".join(table_data[0][:-1])
         sum_val = table_data[0][-1]
+
+
+        """
 
         # Create Commande
         commande = Commande.objects.create(
@@ -78,6 +69,7 @@ def upload(request):
             sum=sum_val,
             id_produit=produit
         )
+        """
 
         #Extract client data
         Cname = "كلية العلوم بقابس"
@@ -86,6 +78,10 @@ def upload(request):
         Cphone = "75392600"
         Cfax = "75392421"
         Ctax_id = pdf.extract_remaining_text_from_list(ftext,":الهاتف 392600 75 الفاكس 392421 75 المعرف الجبائي")
+
+
+        """
+
 
         #Check if Client already exists
         client, created = Client.objects.get_or_create(
@@ -97,12 +93,16 @@ def upload(request):
             tax_id=Ctax_id
             
         )
+        """
 
 
 
         # Extract BonCommande data
         date = pdf.extract_remaining_text_from_list(ftext, "المزود").strip()
         numero=pdf.extract_remaining_text_from_list(ftext, "عدد").strip()
+
+
+        """
         # Create BonCommande
         BonCommande.objects.create(
             date=date,
@@ -111,10 +111,58 @@ def upload(request):
             id_commande=commande,
             numero=numero
         )
+        """
 
-        
+        context = {
+            #fournisseur
+            'identificateur': identificateur,
+            'name': name,
+            'address': address,
+            'sujet': sujet,
+            'consultation': consultation,
+            #produit
+            'pname': produit_name,
+            'pchar':produit_characteristic,
+            #commande
+            'unity':unity,
+            'quantity':quantity,
+            'prixi':price_ind,
+            'prixt':price_tt,
+            'somme':sum_val,
+            #boncommande
+            'date':date,
+            'numero':numero,
+            #client
+            'cname':Cname ,
+            'caddress':Caddress ,
+            'cmail':Cmail ,
+            'cphone':Cphone,
+            'cfax':Cfax ,
+            'ctax':Ctax_id
 
 
-        return HttpResponse("Code executed successfully.")
+        }
 
-    return render(request, 'upload.html', {})
+        return render(request, 'File.html', context)
+
+
+
+
+    return render(request, 'File.html', {})
+
+
+
+def home(request):
+
+    return render(request, 'home.html', {} )
+
+
+
+
+
+
+def User(request):
+
+    return render(request, 'User.html', {} )
+
+

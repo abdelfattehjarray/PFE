@@ -1,67 +1,111 @@
-const form = document.querySelector("form"),
-fileInput = document.querySelector(".file-input"),
-progressArea = document.querySelector(".progress-area"),
-uploadedArea = document.querySelector(".uploaded-area");
+document.addEventListener("DOMContentLoaded", function() {
+  const fileInput = document.querySelector(".file-input");
+  const uploadForm = document.getElementById("uploadForm");
+  const submitButton = document.querySelector("#extractButton");
+  const progressArea = document.querySelector(".progress-area");
+  const uploadedArea = document.querySelector(".uploaded-area");
 
-// form click event
-form.addEventListener("click", () =>{
-  fileInput.click();
-});
+  submitButton.addEventListener("click", function(event) {
+    event.preventDefault(); 
+    uploadForm.submit(); 
+  });
 
-fileInput.onchange = ({target})=>{
-  let file = target.files[0]; //getting file [0] this means if user has selected multiple files then get first one only
-  if(file){
-    let fileName = file.name; //getting file name
-    if(fileName.length >= 12){ //if file name length is greater than 12 then split it and add ...
-      let splitName = fileName.split('.');
-      fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
-    }
-    uploadFile(fileName); //calling uploadFile with passing file name as an argument
-  }
-}
 
-// file upload function
-function uploadFile(name){
-  let xhr = new XMLHttpRequest(); //creating new xhr object (AJAX)
-  xhr.open("POST", "php/upload.php"); //sending post request to the specified URL
-  xhr.upload.addEventListener("progress", ({loaded, total}) =>{ //file uploading progress event
-    let fileLoaded = Math.floor((loaded / total) * 100);  //getting percentage of loaded file size
-    let fileTotal = Math.floor(total / 1000); //gettting total file size in KB from bytes
-    let fileSize;
-    // if file size is less than 1024 then add only KB else convert this KB into MB
-    (fileTotal < 1024) ? fileSize = fileTotal + " KB" : fileSize = (loaded / (1024*1024)).toFixed(2) + " MB";
-    let progressHTML = `<li class="row">
-                          <i class="fas fa-file-alt"></i>
-                          <div class="content">
-                            <div class="details">
-                              <span class="name">${name} • Uploading</span>
-                              <span class="percent">${fileLoaded}%</span>
-                            </div>
-                            <div class="progress-bar">
-                              <div class="progress" style="width: ${fileLoaded}%"></div>
-                            </div>
-                          </div>
-                        </li>`;
-    // uploadedArea.innerHTML = ""; //uncomment this line if you don't want to show upload history
-    uploadedArea.classList.add("onprogress");
-    progressArea.innerHTML = progressHTML;
-    if(loaded == total){
-      progressArea.innerHTML = "";
-      let uploadedHTML = `<li class="row">
-                            <div class="content upload">
-                              <i class="fas fa-file-alt"></i>
-                              <div class="details">
-                                <span class="name">${name} • Uploaded</span>
-                                <span class="size">${fileSize}</span>
-                              </div>
-                            </div>
-                            <i class="fas fa-check"></i>
-                          </li>`;
-      uploadedArea.classList.remove("onprogress");
-      // uploadedArea.innerHTML = uploadedHTML; //uncomment this line if you don't want to show upload history
-      uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML); //remove this line if you don't want to show upload history
+  
+
+  // Add event listener to the whole form
+  uploadForm.addEventListener('click', function() {
+    // Simulate a click on the file input
+    fileInput.click();
+  });
+
+  fileInput.removeEventListener("change", () => uploadForm.submit());
+
+  
+
+  document.querySelector("#viewdata").addEventListener("click", function(){
+    document.querySelector(".popup").classList.add("active");
+    document.querySelector(".wrapper").style.display = "none"; 
+    // Hide the wrapper
+  });
+
+  document.querySelector(".popup .close-btn").addEventListener("click", function(){
+    document.querySelector(".popup").classList.remove("active");
+    document.querySelector(".wrapper").style.display = "block"; // Show the wrapper
+  });
+
+  // fileInput event listeners
+  fileInput.addEventListener("change", function(event) {
+    let file = this.files[0]; // Get the selected file
+    if (file) {
+      let fileName = file.name; // Get file name
+      if (fileName.length >= 12) { // If file name length is greater than 12, truncate it
+        let splitName = fileName.split('.');
+        fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+      }
+      uploadFile(file, fileName); // Call uploadFile function with the file and file name as arguments
     }
   });
-  let data = new FormData(form); //FormData is an object to easily send form data
-  xhr.send(data); //sending form data
+
+  // Upload file function
+function uploadFile(file, name) {
+  let fileLoaded = 0;
+  let fileSize = file.size;
+  let progressHTML = `<li class="row">
+                        <i class="fas fa-file-alt"></i>
+                        <div class="content">
+                          <div class="details">
+                            <span class="name">${name} • Uploading</span>
+                            <span class="percent">0%</span>
+                          </div>
+                          <div class="progress-bar">
+                            <div class="progress" style="width: 0%"></div>
+                          </div>
+                        </div>
+                      </li>`;
+  uploadedArea.classList.add("onprogress");
+  progressArea.innerHTML = progressHTML;
+
+  // Simulate file upload progress
+  let interval = setInterval(() => {
+    fileLoaded += 1024 * 1024; // Simulate uploading 1 MB at a time
+    let fileLoadedPercent = Math.floor((fileLoaded / fileSize) * 100);
+    if (fileLoadedPercent > 100) {
+      fileLoadedPercent = 100;
+    }
+    progressHTML = `<li class="row">
+                      <i class="fas fa-file-alt"></i>
+                      <div class="content">
+                        <div class="details">
+                          <span class="name">${name} • Uploading</span>
+                          <span class="percent">${fileLoadedPercent}%</span>
+                        </div>
+                        <div class="progress-bar">
+                          <div class="progress" style="width: ${fileLoadedPercent}%"></div>
+                        </div>
+                      </div>
+                    </li>`;
+    progressArea.innerHTML = progressHTML;
+    if (fileLoaded >= fileSize) {
+      clearInterval(interval);
+      setTimeout(() => {
+        let uploadedHTML = `<li class="row">
+                              <div class="content upload">
+                                <i class="fas fa-file-alt"></i>
+                                <div class="details">
+                                  <span class="name">${name} • Uploaded</span>
+                                  <span class="size">${(fileSize / (1024 * 1024)).toFixed(2)} MB</span>
+                                </div>
+                              </div>
+                              <i class="fas fa-check"></i>
+                            </li>`;
+        uploadedArea.classList.remove("onprogress");
+        uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+        progressArea.innerHTML = "";
+      }, 1000); // Simulate a delay before showing upload completion
+    }
+  }, 1000); // Simulate a delay before updating progress
 }
+
+});
+

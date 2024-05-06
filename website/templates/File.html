@@ -13,13 +13,13 @@
 
 
 
-  <title>File Upload with Progress Bar | CodingNepal</title>
+  <title>File Upload </title>
 
 </head>
 <body>
 
   <div class="navbar">
-    <div class="logo"><img src="static/images/logo.png"/></div>
+    <div class="logo"><a href=""><img src="static/images/logo.png"/></a></div>
 
     <input type="checkbox" id="check">
     <label for="check" class="icons">
@@ -58,27 +58,186 @@
 
 
 
-
-
+<div class="big-container">
 
 
   <div class="wrapper">
-    <header>File Uploader JavaScript</header>
-    <form action="{% url 'File' %}">{% csrf_token %}
-      <input class="file-input" type="file" name="file" hidden>
+    <header>Select your PDF file</header>
+    <form id="uploadForm"  method="POST" enctype="multipart/form-data">{% csrf_token %}
+      <input class="file-input" type="file" name="file" style="display: none;">
       <i class="fas fa-cloud-upload-alt"></i>
       <p>Browse File to Upload</p>
-      
     </form>
+    
     <section class="progress-area"></section>
     <section class="uploaded-area"></section>
     <br>
-    <button class="submit" role="submit">extract</button>
+    <button class="submit" type="submit" role="submit" id="extractButton">extract</button>
+    <button class="submit" type="submit" role="submit" id="viewdata">view data</button>
+    
+    
+
 
 
   </div>
 
-  <script src="{% static 'js/File.js' %}"></script>
+
+  <div class="form" >
+    <div class="popup">
+      <div class="close-btn">&times;</div>
+      <h2>Extracted Data</h2>
+      <div class="fournisseur-container">
+             <h3>fournisseur</h3>
+             <div class="fournisseur-data">
+             <label for="identificateur">identificateur : </label>
+             <input type="text" id="identificateur" value="{{identificateur}}" >
+
+             <label for="name">name : </label>
+             <input type="text" id="name" value="{{name}}" >
+
+             <label for="adresse">adresse : </label>
+             <input type="text" id="adresse" value="{{ address}}" >
+
+             <label for="sujet">sujet : </label>
+             <input type="text" id="sujet" value="{{sujet}}" >
+
+             <label for="consultation">consultation : </label>
+             <input type="text" id="consultation" value="{{consultation}}" >
+           </div>
+
+        </div>
+
+
+      <div class="boncommande-container">
+        <h3>bon de commande</h3>
+        <div class="boncommande-data">
+          <label for="identificateur">identificateur : </label>
+          <input type="text" id="identificateur" value="identificateur" >
+
+          <label for="date">date : </label>
+          <input type="text" id="date" value="{{date}}" >
+
+          <label for="commande">commande : </label>
+          <input type="text" id="commande" value="commande" >
+
+          <label for="client">client : </label>
+          <input type="text" id="client" value="{{cname}}" >
+
+          <label for="number">number : </label>
+          <input type="text" id="number" value="{{numero}}" >
+       </div>
+
+      </div>
+      <div class="commande-container">
+        <h3>commande</h3>
+        <div class="commande-data">
+          <label for="id">id : </label>
+          <input type="text" id="id" value="id" >
+
+          <label for="product">product : </label>
+          <input type="text" id="product" value="{{pname}}" >
+
+         <label for="quantity">quantite : </label>
+         <input type="text" id="quantity" value="{{quantity}}" >
+
+         <label for="unite">unite : </label>
+         <input type="text" id="unite" value="{{unity}}" >
+
+         <label for="prixindiv">prix individuel : </label>
+         <input type="text" id="prixindiv" value="{{prixi}}" >
+
+         <label for="prixtotal">prix total : </label>
+         <input type="text" id="prixtotal" value="{{prixt}}" >
+
+         <label for="somme">somme : </label>
+         <input type="text" id="somme" value="{{somme}}" >
+        </div>
+
+      </div>
+      <div class="product-container">
+        <h3>produit</h3>
+        <div class="product-data">
+           <label for="idp">produit : </label>
+           <input type="text" id="idp" value="idp" >
+
+           <label for="namep">name : </label>
+           <input type="text" id="namep" value="{{pname}}" >
+
+           <label for="characteristic">caracteristique : </label>
+          <input type="text" id="characteristic" value="{{pchar}}" >
+        </div>
+
+      </div>
+      <div class="client-container">
+        <h3>client</h3>
+        <div class="client-data">
+           <label for="idc">id : </label>
+           <input type="text" id="idc" value="idc" >
+
+           <label for="namec">name : </label>
+           <input type="text" id="namec" value="{{cname}}" >
+
+           <label for="adressec">adresee: </label>
+           <input type="text" id="adressec" value="{{caddress}}" >
+
+           <label for="mail">mail : </label>
+           <input type="text" id="mail" value="{{cmail}}" >
+
+           <label for="phone">phone : </label>
+           <input type="text" id="phone" value="{{cphone}}" >
+
+           <label for="fax">fax : </label>
+           <input type="text" id="fax" value="{{cfax}}" >
+
+           <label for="taxid">taxid : </label>
+           <input type="text" id="taxid" value="{{ctax}}" >
+         </div>
+
+        </div>
+
+      <button type="submit" name="save" id="savebutton">sauvergarder</button>
+
+    </div>
+  </div>
+
+
+
+  
+   
+</div>
+
+
+
+<script src="{% static 'js/File.js' %}"></script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const fileInput = document.querySelector(".file-input");
+    const uploadForm = document.getElementById("uploadForm");
+    const submitButton = document.querySelector("#extractButton");
+
+    // Remove the event listener for automatic form submission when file input changes
+    fileInput.removeEventListener("change", () => uploadForm.submit());
+
+    submitButton.addEventListener("click", function(event) {
+      event.preventDefault(); // Prevent the default action (form submission)
+      uploadForm.submit(); // Manually submit the form
+    });
+
+    document.querySelector("#viewdata").addEventListener("click", function(){
+      document.querySelector(".popup").classList.add("active");
+      document.querySelector(".wrapper").style.display = "none";
+    });
+
+    document.querySelector(".popup .close-btn").addEventListener("click", function(){
+      document.querySelector(".popup").classList.remove("active");
+      document.querySelector(".wrapper").style.display = "block";
+    });
+  });
+</script>
+
+
   {% endblock %}
 </body>
 </html>

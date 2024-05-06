@@ -11,8 +11,19 @@ body{
   align-items: center;
   min-height: 100vh;
   background: #000000;
+  align-items: center;
+  justify-content: center;
   
 
+}
+
+
+
+
+
+.big-container{
+  align-items: center;
+  margin-top: 5%;
 }
 
 /* menu*/
@@ -124,7 +135,9 @@ body{
 }
 
 @media  (max-width: 992px) {
-
+  .big-container{
+    margin-top: 20%;
+  }
   .body .navbar{
       padding: 1.3rem 5%;
   }
@@ -140,18 +153,25 @@ body{
 
 
 @media (max-width: 768px) {
+ 
+
+  .big-container{
+    margin-top: 30%;
+  }
+
 
 
   #check:checked~.icons #menu-icon{
       display: none;
   }
   .icons {
-    right: 5%;
+    right: 8%;
     position: absolute;
     font-size: 2.8rem;
     color: white;
     cursor: pointer;
     display: block;
+    text-align: right;
   }
   .icons #close-icon{
       display: none;
@@ -163,7 +183,7 @@ body{
 
   .menubar {
     position: absolute;
-    top: 15%;
+    top: 60%;
     left: 50%; /* Adjust the left position to center the menu */
     transform: translateX(-50%); /* Move the menu to the right */
     width: 100%;
@@ -172,6 +192,7 @@ body{
     overflow: hidden;
     transition: 0.3s ease;
     background-color: #000;
+    z-index: 9999;
   }
 
  
@@ -200,25 +221,201 @@ body{
     color: #fff;
     display: block;
     margin: -0.8rem 0;
-    font-size: larger;
+    font-size: medium;
     
   
   }
 
-  .nm{
- 
-      text-align: center;
-      padding-left: 17%;
-      width: 100%;
+
+  .popup.active{
+    margin-top: 40%;
+    display: inline-block;
+    
+    opacity: 1;
+    border-radius: 15px;
+    transform: translate(-0%,-70%) scale(1);
+    transition: top 0ms ease-in-out 0ms, 
+                opacity 200ms ease-in-out, 
+                transform 200ms ease-in-out 0ms; 
   }
 
+}
 
+/*popup*/
+
+
+.form{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  
+}
+
+
+.popup {
+  display: none;
+  top: 30%;
+  opacity: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  margin: 70px;
+  width: 60%;
+  margin-left: 270;
+  height: 700px; /* Set your desired height */
+  overflow-y: auto;
+  margin-top: 10%;
+  box-shadow: 2px 2px 5px 5px rgba(255, 255, 255, 0.15);
+  transform: translate(-0%,-70%) scale(1.25);
+  transition: top 0ms ease-in-out 200ms, 
+              opacity 200ms ease-in-out,
+              transform 200ms ease-in-out 0ms; 
+
+}
+
+.popup.active{
+  margin-top: 40%;
+  display: inline-block;
+  top:30%;
+  opacity: 1;
+  border-radius: 15px;
+  transform: translate(-0%,-70%) scale(1);
+  transition: top 0ms ease-in-out 0ms, 
+              opacity 200ms ease-in-out, 
+              transform 200ms ease-in-out 0ms; 
 }
 
 
 
 
 
+
+
+.fournisseur-container,
+.boncommande-container,
+.commande-container,
+.product-container,
+.client-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  width : 95% ;
+  margin-left: 30px;
+}
+
+.fournisseur-container h3,
+.boncommande-container h3,
+.commande-container h3,
+.product-container h3,
+.client-container h3 {
+  margin-top: 15px;
+  margin-bottom: 40px;
+  text-align: center;
+  align-items: center;
+}
+
+.fournisseur-data,
+.boncommande-data,
+.commande-data,
+.product-data,
+.client-data {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+
+label {
+  width: 20%;
+  margin-bottom: 40px;
+  margin-left: 50px;
+  text-align: left;
+}
+
+input[type="text"] {
+  width: 30%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-right: 120px;
+  
+  margin-bottom: 30px;
+
+}
+
+.form h2{
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.popup .close-btn {
+  
+  margin-top: -20;
+  margin-left: 100%;
+  width : 15px;
+  height : 15px;
+  background : #888;
+  color :#eee;
+  text-align : center ;
+  line-height : 15px;
+  border-radius : 15px;
+  cursor : pointer;
+}
+
+
+
+
+#savebutton {
+  appearance: none;
+  background-color: #000000;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 30%;
+  will-change: transform;
+}
+
+#savebutton:disabled {
+  pointer-events: none;
+}
+
+#savebutton:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+  border: 2px solid #1A1A1A;
+  background-color: white;
+  color: black;
+}
+
+#savebutton:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
 
 
 
@@ -368,7 +565,7 @@ section .details span{
   font-size: 16px;
   font-weight: 600;
   line-height: normal;
-  margin-left: 110;
+  margin-left: 25;
   min-height: 60px;
   min-width: 0;
   outline: none;
@@ -399,3 +596,4 @@ section .details span{
   box-shadow: none;
   transform: translateY(0);
 }
+
