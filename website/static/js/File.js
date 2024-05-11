@@ -73,7 +73,8 @@ extractButton.addEventListener('click', (event) => {
     const formData = new FormData(uploadForm);
 
     loading.style.display = 'block'; 
-    extractButton.disabled = true;  
+    extractButton.disabled = true; 
+    viewdataButton.disabled = true; 
 
     fetch('', {
         method: 'POST',
@@ -89,11 +90,16 @@ extractButton.addEventListener('click', (event) => {
         populateSaveForm(data);
         loading.style.display = 'none'; 
         extractButton.disabled = false; 
+        viewdataButton.disabled = false; 
+
+        
     })
     .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
         loading.style.display = 'none';
         extractButton.disabled = false; 
+        viewdataButton.disabled = false; 
+
     });
 });
 
