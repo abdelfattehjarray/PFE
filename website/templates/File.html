@@ -54,6 +54,7 @@
 
 
 
+  <div id="loading" style="display: none;">Loading...</div>
 
 
 
@@ -67,6 +68,8 @@
       <input class="file-input" type="file" name="file" style="display: none;">
       <i class="fas fa-cloud-upload-alt"></i>
       <p>Browse File to Upload</p>
+      <p id="fileError" style="color: red; display: none;"></p> <div id="fileError" class="error-message" style="display: none; color: red;"></div>
+
     </form>
     
     <section class="progress-area"></section>
@@ -82,7 +85,7 @@
   </div>
 
 
-  <div class="form" >
+  <form id="saveform"  method="POST" enctype="multipart/form-data">{% csrf_token %}
     <div class="popup">
       <div class="close-btn">&times;</div>
       <h2>Extracted Data</h2>
@@ -204,38 +207,17 @@
 
   
    
-</div>
+</form>
+
+
+
 
 
 
 <script src="{% static 'js/File.js' %}"></script>
 
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const fileInput = document.querySelector(".file-input");
-    const uploadForm = document.getElementById("uploadForm");
-    const submitButton = document.querySelector("#extractButton");
 
-    // Remove the event listener for automatic form submission when file input changes
-    fileInput.removeEventListener("change", () => uploadForm.submit());
-
-    submitButton.addEventListener("click", function(event) {
-      event.preventDefault(); // Prevent the default action (form submission)
-      uploadForm.submit(); // Manually submit the form
-    });
-
-    document.querySelector("#viewdata").addEventListener("click", function(){
-      document.querySelector(".popup").classList.add("active");
-      document.querySelector(".wrapper").style.display = "none";
-    });
-
-    document.querySelector(".popup .close-btn").addEventListener("click", function(){
-      document.querySelector(".popup").classList.remove("active");
-      document.querySelector(".wrapper").style.display = "block";
-    });
-  });
-</script>
 
 
   {% endblock %}

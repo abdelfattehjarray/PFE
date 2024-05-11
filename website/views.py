@@ -4,6 +4,11 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 
+
+
+
+
+
 def File(request):
     if request.method == 'POST':
         upload_file = request.FILES['file']
@@ -143,8 +148,7 @@ def File(request):
 
         }
 
-        return render(request, 'File.html', context)
-
+        return JsonResponse(context)
 
 
 

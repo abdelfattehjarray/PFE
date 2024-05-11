@@ -1,17 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-  const fileInput = document.querySelector(".file-input");
-  const uploadForm = document.getElementById("uploadForm");
-  const submitButton = document.querySelector("#extractButton");
-  const progressArea = document.querySelector(".progress-area");
-  const uploadedArea = document.querySelector(".uploaded-area");
-
-  submitButton.addEventListener("click", function(event) {
-    event.preventDefault(); 
-    uploadForm.submit(); 
-  });
-
-
-  
 
   // Add event listener to the whole form
   uploadForm.addEventListener('click', function() {
@@ -34,78 +21,114 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector(".wrapper").style.display = "block"; // Show the wrapper
   });
 
-  // fileInput event listeners
-  fileInput.addEventListener("change", function(event) {
-    let file = this.files[0]; // Get the selected file
-    if (file) {
-      let fileName = file.name; // Get file name
-      if (fileName.length >= 12) { // If file name length is greater than 12, truncate it
-        let splitName = fileName.split('.');
-        fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
-      }
-      uploadFile(file, fileName); // Call uploadFile function with the file and file name as arguments
-    }
-  });
-
-  // Upload file function
-function uploadFile(file, name) {
-  let fileLoaded = 0;
-  let fileSize = file.size;
-  let progressHTML = `<li class="row">
-                        <i class="fas fa-file-alt"></i>
-                        <div class="content">
-                          <div class="details">
-                            <span class="name">${name} • Uploading</span>
-                            <span class="percent">0%</span>
-                          </div>
-                          <div class="progress-bar">
-                            <div class="progress" style="width: 0%"></div>
-                          </div>
-                        </div>
-                      </li>`;
-  uploadedArea.classList.add("onprogress");
-  progressArea.innerHTML = progressHTML;
-
-  // Simulate file upload progress
-  let interval = setInterval(() => {
-    fileLoaded += 1024 * 1024; // Simulate uploading 1 MB at a time
-    let fileLoadedPercent = Math.floor((fileLoaded / fileSize) * 100);
-    if (fileLoadedPercent > 100) {
-      fileLoadedPercent = 100;
-    }
-    progressHTML = `<li class="row">
-                      <i class="fas fa-file-alt"></i>
-                      <div class="content">
-                        <div class="details">
-                          <span class="name">${name} • Uploading</span>
-                          <span class="percent">${fileLoadedPercent}%</span>
-                        </div>
-                        <div class="progress-bar">
-                          <div class="progress" style="width: ${fileLoadedPercent}%"></div>
-                        </div>
-                      </div>
-                    </li>`;
-    progressArea.innerHTML = progressHTML;
-    if (fileLoaded >= fileSize) {
-      clearInterval(interval);
-      setTimeout(() => {
-        let uploadedHTML = `<li class="row">
-                              <div class="content upload">
-                                <i class="fas fa-file-alt"></i>
-                                <div class="details">
-                                  <span class="name">${name} • Uploaded</span>
-                                  <span class="size">${(fileSize / (1024 * 1024)).toFixed(2)} MB</span>
-                                </div>
-                              </div>
-                              <i class="fas fa-check"></i>
-                            </li>`;
-        uploadedArea.classList.remove("onprogress");
-        uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
-        progressArea.innerHTML = "";
-      }, 1000); // Simulate a delay before showing upload completion
-    }
-  }, 1000); // Simulate a delay before updating progress
-}
 
 });
 
+
+
+
+
+const uploadForm = document.getElementById('uploadForm');
+const fileInput = document.querySelector('.file-input');
+const extractButton = document.getElementById('extractButton');
+const saveForm = document.getElementById('saveform');
+const popup = document.querySelector('.popup');
+const loading = document.getElementById('loading');
+const viewdataButton = document.getElementById('viewdata'); // Get the viewdata button
+
+// Function to show the popup
+function showPopup() {
+    popup.style.display = 'block';
+}
+
+// Function to hide the popup
+function hidePopup() {
+    popup.style.display = 'none';
+}
+
+fileInput.addEventListener('change', () => {
+    const fileName = fileInput.files[0].name;
+    document.querySelector('.uploaded-area').innerHTML = fileName;
+});
+
+extractButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const fileError = document.getElementById('fileError');
+
+    // Check if a file is selected
+    if (fileInput.files.length === 0) {
+        fileError.textContent = "No file selected.";
+        fileError.style.display = 'block';
+        return; // Don't proceed with extraction
+    } else {
+        // Hide the error message if it was previously displayed
+        fileError.style.display = 'none'; 
+    }
+
+
+
+
+
+    const formData = new FormData(uploadForm);
+
+    loading.style.display = 'block'; 
+    extractButton.disabled = true;  
+
+    fetch('', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        populateSaveForm(data);
+        loading.style.display = 'none'; 
+        extractButton.disabled = false; 
+    })
+    .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+        loading.style.display = 'none';
+        extractButton.disabled = false; 
+    });
+});
+
+function populateSaveForm(data) {
+  // Fournisseur data
+  document.getElementById('identificateur').value = data.identificateur;
+  document.getElementById('name').value = data.name;
+  document.getElementById('adresse').value = data.address;
+  document.getElementById('sujet').value = data.sujet;
+  document.getElementById('consultation').value = data.consultation;
+
+  // Produit data
+  document.getElementById('idp').value = 'idp'; // Adjust as needed
+  document.getElementById('namep').value = data.pname;
+  document.getElementById('characteristic').value = data.pchar;
+
+  // Commande data
+  document.getElementById('id').value = 'id'; // Adjust as needed
+  document.getElementById('product').value = data.pname;
+  document.getElementById('quantity').value = data.quantity;
+  document.getElementById('unite').value = data.unity;
+  document.getElementById('prixindiv').value = data.prixi;
+  document.getElementById('prixtotal').value = data.prixt;
+  document.getElementById('somme').value = data.somme;
+
+  // Client data
+  document.getElementById('idc').value = 'idc'; // Adjust as needed
+  document.getElementById('namec').value = data.cname;
+  document.getElementById('adressec').value = data.caddress;
+  document.getElementById('mail').value = data.cmail;
+  document.getElementById('phone').value = data.cphone;
+  document.getElementById('fax').value = data.cfax;
+  document.getElementById('taxid').value = data.ctax;
+
+  // BonCommande data
+  document.getElementById('date').value = data.date; 
+  document.getElementById('number').value = data.numero;
+}

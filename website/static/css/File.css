@@ -134,6 +134,19 @@ body{
   display: none;
 }
 
+
+#loading {
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  z-index: 1000; 
+  background-color: rgba(0, 0, 0, 0.7); 
+  color: white;
+  padding: 15px 30px;
+  border-radius: 5px;
+}
+
 @media  (max-width: 992px) {
   .big-container{
     margin-top: 20%;
@@ -244,7 +257,7 @@ body{
 /*popup*/
 
 
-.form{
+#saveform{
   display: flex;
   align-items: center;
   text-align: center;
@@ -350,7 +363,7 @@ input[type="text"] {
 
 }
 
-.form h2{
+#saveform h2{
   text-align: center;
   padding-bottom: 30px;
 }
