@@ -239,17 +239,24 @@ body{
   
   }
 
+  .body{
+    padding-right: 0%;
+  }
 
-  .popup.active{
-    margin-top: 40%;
+
+  body .popup.active{
+    margin-right: 3%;
+    width: 100%;
+    margin-left: 8%;
     display: inline-block;
     
     opacity: 1;
     border-radius: 15px;
-    transform: translate(-0%,-70%) scale(1);
+    transform: translate(-3%,-40%) scale(1);
     transition: top 0ms ease-in-out 0ms, 
                 opacity 200ms ease-in-out, 
                 transform 200ms ease-in-out 0ms; 
+    padding:5%;
   }
 
 }
@@ -292,10 +299,9 @@ body{
 .popup.active{
   margin-top: 40%;
   display: inline-block;
-  top:30%;
   opacity: 1;
   border-radius: 15px;
-  transform: translate(-0%,-70%) scale(1);
+  transform: translate(-3%,-75%) scale(1);
   transition: top 0ms ease-in-out 0ms, 
               opacity 200ms ease-in-out, 
               transform 200ms ease-in-out 0ms; 

@@ -85,7 +85,7 @@
   </div>
 
 
-  <form id="saveform"  method="POST" enctype="multipart/form-data">{% csrf_token %}
+  <form id="saveform"  method="POST" >{% csrf_token %}
     <div class="popup">
       <div class="close-btn">&times;</div>
       <h2>Extracted Data</h2>
@@ -114,8 +114,8 @@
       <div class="boncommande-container">
         <h3>bon de commande</h3>
         <div class="boncommande-data">
-          <label for="identificateur">identificateur : </label>
-          <input type="text" id="identificateur" value="identificateur" >
+          <label for="idbc">identificateur : </label>
+          <input type="text" id="idbc" value="identificateur" >
 
           <label for="date">date : </label>
           <input type="text" id="date" value="{{date}}" >

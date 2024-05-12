@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
 
   // Add event listener to the whole form
-  uploadForm.addEventListener('click', function() {
+  uploadForm.addEventListener('click', function(event) {
     // Simulate a click on the file input
-    fileInput.click();
+    
+        fileInput.click(); 
+        console.log(event.target)
+    
   });
 
   fileInput.removeEventListener("change", () => uploadForm.submit());
@@ -138,3 +141,102 @@ function populateSaveForm(data) {
   document.getElementById('date').value = data.date; 
   document.getElementById('number').value = data.numero;
 }
+
+
+
+// ... (Existing JavaScript)
+
+// Function to gather data from the save form
+function getSaveFormData() {
+    return {
+      fournisseur: {
+        identificateur: document.getElementById('identificateur').value,
+        name: document.getElementById('name').value,
+        adresse: document.getElementById('adresse').value,
+        sujet: document.getElementById('sujet').value,
+        consultation: document.getElementById('consultation').value,
+      },
+      produit: {
+        namep: document.getElementById('namep').value,
+        characteristic: document.getElementById('characteristic').value,
+      },
+      commande: {
+        quantity: document.getElementById('quantity').value,
+        unite: document.getElementById('unite').value,
+        prixindiv: document.getElementById('prixindiv').value,
+        prixtotal: document.getElementById('prixtotal').value,
+        somme: document.getElementById('somme').value,
+      },
+      client: {
+        namec: document.getElementById('namec').value,
+        adressec: document.getElementById('adressec').value,
+        mail: document.getElementById('mail').value,
+        phone: document.getElementById('phone').value,
+        fax: document.getElementById('fax').value,
+        taxid: document.getElementById('taxid').value,
+      },
+      bonCommande: {
+        date: document.getElementById('date').value,
+        number: document.getElementById('number').value, 
+      },
+    };
+  }
+  
+  // Event listener for the save button
+  saveForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent default form submission
+
+      
+      console.log(event.target)
+  
+      const formData = getSaveFormData();
+  
+      loading.style.display = 'block'; 
+
+      console.log(formData)
+  
+      fetch('', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json', 
+              'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
+          },
+          body: JSON.stringify(formData),
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json(); 
+      })
+      .then(data => {
+          console.log('Data saved successfully!', data); // Handle success
+          loading.style.display = 'none';
+          // Additional actions, like closing the popup or showing a success message
+          document.querySelector(".popup").classList.remove("active");
+           document.querySelector(".wrapper").style.display = "block"; 
+      })
+      .catch(error => {
+          console.error('Error saving data:', error); // Handle errors
+          loading.style.display = 'none';
+          // Show an error message to the user 
+      });
+    
+  });
+  
+  
+  // Helper function to get CSRF token from cookies
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
