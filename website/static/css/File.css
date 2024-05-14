@@ -98,6 +98,41 @@ body{
   color: #00ffff;
 }
 
+.navbar li .nested-menu2 {
+  display: none;
+}
+
+
+
+.nested-menu2 {
+  margin-right: 20x;
+  display: block;
+  position: absolute;
+  background-color: none;
+  min-width: 190px;
+  z-index: 1;
+  left: -100;
+  padding-top: 20px;
+}
+
+
+
+.navbar li:hover .nested-menu2 {
+  display: block;
+}
+
+.nested-menu2 a {
+  color: #fff;
+  padding: 0.5rem 1rem;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+}
+
+.nested-menu2 a:hover {
+  color: #00ffff;
+}
+
 
 .logo img{
   padding-left: 0%;
@@ -239,14 +274,12 @@ body{
   
   }
 
-  .body{
-    padding-right: 0%;
-  }
+  
 
 
   body .popup.active{
     margin-right: 3%;
-    width: 100%;
+    width: 90%;
     margin-left: 8%;
     display: inline-block;
     
@@ -261,15 +294,7 @@ body{
 
 }
 
-/*popup*/
 
-
-#saveform{
-  display: flex;
-  align-items: center;
-  text-align: center;
-  
-}
 
 
 .popup {
@@ -359,6 +384,7 @@ label {
 }
 
 input[type="text"] {
+  
   width: 30%;
   padding: 5px;
   border: 1px solid #ccc;
@@ -392,6 +418,7 @@ input[type="text"] {
 
 
 #savebutton {
+  margin-left: 35%;
   appearance: none;
   background-color: #000000;
   border: 2px solid #1A1A1A;

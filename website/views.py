@@ -1,92 +1,113 @@
+import sys
+from django.contrib import messages
 from django.db import IntegrityError
 from .models import Client, Fournisseur, BonCommande,Produit, Commande
 from .extractcode import pdf, tablepdf
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.utils.datastructures import MultiValueDictKeyError
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import user_passes_test
+sys.stdout.reconfigure(encoding='utf-8')
 
+def save_data(request):
+        if request.method == 'POST':
+           
+            
+                    
+            # Get ALL values from request.POST 
+            identificateur1 = request.POST.get('identificateur').encode('utf-8').decode('utf-8') 
+            name1 = request.POST.get('name').encode('utf-8').decode('utf-8') 
+            adresse1 = request.POST.get('adresse').encode('utf-8').decode('utf-8') 
+            sujet1 = request.POST.get('sujet').encode('utf-8').decode('utf-8') 
+            consultation1 = request.POST.get('consultation').encode('utf-8').decode('utf-8') 
 
+            namep1 = request.POST.get('namep').encode('utf-8').decode('utf-8') 
+            characteristic1 = request.POST.get('characteristic').encode('utf-8').decode('utf-8') 
 
-@csrf_exempt
-def File(request):
-    if request.method == 'POST':
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            print("Received AJAX POST request")
+            quantity1 = request.POST.get('quantity').encode('utf-8').decode('utf-8') 
+            unite1 = request.POST.get('unite').encode('utf-8').decode('utf-8') 
+            prixindiv1 = request.POST.get('prixindiv').encode('utf-8').decode('utf-8') 
+            prixtotal1 = request.POST.get('prixtotal').encode('utf-8').decode('utf-8') 
+            somme1 = request.POST.get('somme').encode('utf-8').decode('utf-8') 
 
-            data = json.loads(request.body.decode('utf-8'))
-            print("Data:", data) 
+            namec1 = request.POST.get('namec').encode('utf-8').decode('utf-8') 
+            adressec1 = request.POST.get('adressec').encode('utf-8').decode('utf-8') 
+            mail1 = request.POST.get('mail').encode('utf-8').decode('utf-8') 
+            phone1 = request.POST.get('phone').encode('utf-8').decode('utf-8') 
+            fax1 = request.POST.get('fax').encode('utf-8').decode('utf-8') 
+            taxid1 = request.POST.get('taxid').encode('utf-8').decode('utf-8') 
 
+            date1 = request.POST.get('date').encode('utf-8').decode('utf-8') 
+            number1 = request.POST.get('number').encode('utf-8').decode('utf-8') 
+            print("data", identificateur1,name1,adresse1,sujet1,consultation1)
+            sys.stdout.flush()
 
-            fournisseur_data = data['fournisseur']
-            produit_data = data['produit']
-            commande_data = data['commande']
-            client_data = data['client']
-            bonCommande_data = data['bonCommande']
-
-            try:
-
-                if not all(key in fournisseur_data for key in ['identificateur', 'name', 'adresse', 'sujet', 'consultation']):
-                 return JsonResponse({'error': 'Missing data in fournisseur_data'}, status=400)
+            try: 
                 # Save Fournisseur
                 fournisseur, created = Fournisseur.objects.get_or_create(
-                    identificateur=str(fournisseur_data['identificateur']),
+                    identificateur=str(identificateur1),
                     defaults={
-                        'name':str( fournisseur_data['name']),
-                        'address': str(fournisseur_data['adresse']),
-                        'sujet': str(fournisseur_data['sujet']),
-                        'consultation': str(fournisseur_data['consultation'])
+                        'name': str(name1),
+                        'address': str(adresse1),
+                        'sujet': str(sujet1),
+                        'consultation': str(consultation1)
                     }
                 )
 
                 # Save Produit
                 produit, created = Produit.objects.get_or_create(
-                    name=str(produit_data['namep']),
-                    characteristic=str(produit_data['characteristic'])
+                    name=str(namep1),
+                    characteristic=str(characteristic1)
                 )
 
                 # Save Commande
                 commande = Commande.objects.create(
-                    unity=str(commande_data['unite']),
-                    quantity=str(commande_data['quantity']),
-                    price_indiv=str(commande_data['prixindiv']),
-                    price_total=str(commande_data['prixtotal']),
-                    sum=str(commande_data['somme']),
+                    unity=str(unite1),
+                    quantity=str(quantity1),
+                    price_indiv=str(prixindiv1),
+                    price_total=str(prixtotal1),
+                    sum=str(somme1),
                     id_produit=produit
                 )
 
                 # Save Client
                 client, created = Client.objects.get_or_create(
-                    name=str(client_data['namec']),
+                    name=str(namec1),
                     defaults={
-                        'address':str( client_data['adressec']),
-                        'mail': str(client_data['mail']),
-                        'phone': str(client_data['phone']),
-                        'fax': str(client_data['fax']),
-                        'tax_id': str(client_data['taxid'])
+                        'address': str(adressec1),
+                        'mail': str(mail1),
+                        'phone': str(phone1),
+                        'fax': str(fax1),
+                        'tax_id': str(taxid1)
                     }
                 )
 
                 # Save BonCommande
                 BonCommande.objects.create(
-                    date=str(bonCommande_data['date']),
+                    date=str(date1),
                     id_client=client,
                     fournisseur=fournisseur,
                     id_commande=commande,
-                    numero=str(bonCommande_data['number'])
+                    numero=str(number1)
                 )
 
                 return JsonResponse({'message': 'Data saved successfully!'})
-            except IntegrityError as e: 
+
+            except IntegrityError as e:
                 return JsonResponse({'error': 'Database integrity error: ' + str(e)}, status=400)
 
             except Exception as e:
                 return JsonResponse({'error': 'An unexpected error occurred: ' + str(e)}, status=500)
+        return redirect("User")
 
-     
-        else:
+
+@csrf_exempt
+def File(request):
+    if request.method == 'POST':
             try:
                 upload_file = request.FILES['file']
             except MultiValueDictKeyError:
@@ -106,10 +127,10 @@ def File(request):
             ftext = pdf.extract_text_per_line(upload_file)
 
             # Extract Fournisseur data
-            identificateur = pdf.extract_remaining_text_from_list(ftext, ":المعرف")
-            name = pdf.extract_remaining_text_from_list(ftext, ":االسم واللقب أو االسم االجتماعي")
-            address = pdf.extract_remaining_text_from_list(ftext, ":العنوان")
-            sujet = pdf.extract_remaining_text_from_list(ftext, "موضوع الطلب:")
+            identificateur = pdf.extract_remaining_text_from_list(ftext, ":المعرف").strip()
+            name = pdf.extract_remaining_text_from_list(ftext, ":االسم واللقب أو االسم االجتماعي").strip()
+            address = pdf.extract_remaining_text_from_list(ftext, ":العنوان").strip()
+            sujet = pdf.extract_remaining_text_from_list(ftext, "موضوع الطلب:").strip()
             consultation=pdf.extract_remaining_text_from_list(ftext, "consultation").strip()
 
 
@@ -172,7 +193,7 @@ def File(request):
 
             }
             
-        return JsonResponse(context) 
+            return JsonResponse(context) 
 
     return render(request, 'File.html', {}) 
  
@@ -192,7 +213,31 @@ def home(request):
 
 
 def User(request):
+   
 
     return render(request, 'User.html', {} )
 
 
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('emailL')
+        password = request.POST.get('passwordL')
+
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirect to a success page (e.g., home)
+            return redirect('home')
+        else:
+            # Add an error message to the context
+            messages.error(request, 'Wrong username or password, try again!')
+            return redirect('User')
+    else:
+        return render(request, 'User.html')
+    
+def logout_view(request):
+    logout(request)
+    return redirect('User')

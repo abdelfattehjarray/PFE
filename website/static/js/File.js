@@ -115,12 +115,10 @@ function populateSaveForm(data) {
   document.getElementById('consultation').value = data.consultation;
 
   // Produit data
-  document.getElementById('idp').value = 'idp'; // Adjust as needed
   document.getElementById('namep').value = data.pname;
   document.getElementById('characteristic').value = data.pchar;
 
   // Commande data
-  document.getElementById('id').value = 'id'; // Adjust as needed
   document.getElementById('product').value = data.pname;
   document.getElementById('quantity').value = data.quantity;
   document.getElementById('unite').value = data.unity;
@@ -129,7 +127,6 @@ function populateSaveForm(data) {
   document.getElementById('somme').value = data.somme;
 
   // Client data
-  document.getElementById('idc').value = 'idc'; // Adjust as needed
   document.getElementById('namec').value = data.cname;
   document.getElementById('adressec').value = data.caddress;
   document.getElementById('mail').value = data.cmail;
@@ -142,101 +139,40 @@ function populateSaveForm(data) {
   document.getElementById('number').value = data.numero;
 }
 
+// Add event listener to the save button
+document.getElementById('savebutton').addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent default form submission
+    const saveFormData = new FormData(saveForm); // Create FormData from saveForm
+  
+    fetch(saveDataURL, { // Assuming 'save_data' is your view URL
+        method: 'POST',
+        body: saveFormData,
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken') // Get the token from a cookie
+        }
+    })
 
-
-// ... (Existing JavaScript)
-
-// Function to gather data from the save form
-function getSaveFormData() {
-    return {
-      fournisseur: {
-        identificateur: document.getElementById('identificateur').value,
-        name: document.getElementById('name').value,
-        adresse: document.getElementById('adresse').value,
-        sujet: document.getElementById('sujet').value,
-        consultation: document.getElementById('consultation').value,
-      },
-      produit: {
-        namep: document.getElementById('namep').value,
-        characteristic: document.getElementById('characteristic').value,
-      },
-      commande: {
-        quantity: document.getElementById('quantity').value,
-        unite: document.getElementById('unite').value,
-        prixindiv: document.getElementById('prixindiv').value,
-        prixtotal: document.getElementById('prixtotal').value,
-        somme: document.getElementById('somme').value,
-      },
-      client: {
-        namec: document.getElementById('namec').value,
-        adressec: document.getElementById('adressec').value,
-        mail: document.getElementById('mail').value,
-        phone: document.getElementById('phone').value,
-        fax: document.getElementById('fax').value,
-        taxid: document.getElementById('taxid').value,
-      },
-      bonCommande: {
-        date: document.getElementById('date').value,
-        number: document.getElementById('number').value, 
-      },
-    };
-  }
-  
-  // Event listener for the save button
-  saveForm.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevent default form submission
-
-      
-      console.log(event.target)
-  
-      const formData = getSaveFormData();
-  
-      loading.style.display = 'block'; 
-
-      console.log(formData)
-  
-      fetch('', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json', 
-              'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
-          },
-          body: JSON.stringify(formData),
-      })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.json(); 
-      })
-      .then(data => {
-          console.log('Data saved successfully!', data); // Handle success
-          loading.style.display = 'none';
-          // Additional actions, like closing the popup or showing a success message
-          document.querySelector(".popup").classList.remove("active");
-           document.querySelector(".wrapper").style.display = "block"; 
-      })
-      .catch(error => {
-          console.error('Error saving data:', error); // Handle errors
-          loading.style.display = 'none';
-          // Show an error message to the user 
-      });
-    
-  });
-  
-  
-  // Helper function to get CSRF token from cookies
+    .then(response => {
+        // Handle the response from your server
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+       // Helper function to get the CSRF token from cookies
+ 
+  }); 
   function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
         }
-      }
     }
     return cookieValue;
-  }
+}

@@ -93,6 +93,41 @@ body {
   .nested-menu a:hover {
     color: #00ffff;
   }
+
+  .navbar li .nested-menu2 {
+    display: none;
+  }
+  
+
+  
+  .nested-menu2 {
+    margin-right: 20x;
+    display: block;
+    position: absolute;
+    background-color: none;
+    min-width: 190px;
+    z-index: 1;
+    left: -100;
+    padding-top: 20px;
+  }
+  
+  
+  
+  .navbar li:hover .nested-menu2 {
+    display: block;
+  }
+  
+  .nested-menu2 a {
+    color: #fff;
+    padding: 0.5rem 1rem;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .nested-menu2 a:hover {
+    color: #00ffff;
+  }
   
   
   .logo img{

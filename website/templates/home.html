@@ -30,7 +30,7 @@
     <div class="menubar">
          <ul class="mbar">
              <li><a href="File">New FIle</a></li>
-             <li><a href="#">User Managements</a> </li>
+             
              <li class="active">
                  <a href="#">Data Managements</a>
 
@@ -44,7 +44,18 @@
                     </ul>
                 
               </li>
-              <li><a href="#"></a></li>
+              {% if request.user.is_superuser %} 
+              <li ><a href="#">Users confirmation</a> </li>
+              {% endif %}
+              <li><a href="#"><i class="fas fa-user"></i></a>
+                <ul class="nested-menu2">
+                  <div class="nm2">
+                     <li></li>
+                     <li><a href="#">settings</a></li>
+                     <li><a href="{% url 'logout_view' %}">logout</a></li>
+                  </div>
+              </ul>
+              </li>
          </ul>
      </div>
   </div>

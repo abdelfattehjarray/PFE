@@ -18,22 +18,29 @@
     <div class="forms-container">
       <div class="signin-signup">
 
-        <form action="{% url 'User' %}" class="sign-in-form" method="POST">{% csrf_token %}
+        <form id="sign-in-form" class="sign-in-form" action="{% url 'login_view' %}" method="POST">{% csrf_token %}
           <h2 class="title">Log in</h2>
           <div class="input-field">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email" name="emailL" />
+            <input type="text" placeholder="Email or username" name="emailL" />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
             <input type="password" placeholder="Password" name="passwordL" />
           </div>
+          {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
           <input type="submit" value="Login" class="btn solid" />
           
           
         </form>
 
-        <form action="{% url 'User' %}" class="sign-up-form" method="POST">{% csrf_token %}
+        <form id="sign-up-form" class="sign-up-form" method="POST">{% csrf_token %}
           <h2 class="title">Sign up</h2>
           <div class="input-field">
             <i class="fas fa-user"></i>
@@ -58,6 +65,7 @@
             <select name="statut" id="statut" placeholder="choisir votre statut " >
              <option value="doyen">Doyen</option>
              <option value="secretere">Secretère</option>
+             <option value="employer">employer</option>
              
             </select>
           </div>
