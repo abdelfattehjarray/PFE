@@ -1,6 +1,7 @@
 {% load static %}
 
 {% block content %}
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -17,6 +18,7 @@
 
 </head>
 <body>
+
 
   <div class="navbar">
     <div class="logo"><a href=""><img src="static/images/logo.png"/></a></div>
@@ -62,8 +64,10 @@
      </div>
   </div>
 
-
-
+  <div class="alert alert-success" id="successMessage" style="display: none;" role="alert">
+    Data saved successfully.
+  </div>
+  
 
 
   <div id="loading" style="display: none;">Loading...</div>

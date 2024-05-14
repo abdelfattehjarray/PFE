@@ -643,3 +643,34 @@ section .details span{
   transform: translateY(0);
 }
 
+
+
+.alert {
+    top: 80px;
+    position: absolute;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 500px;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.close-btn {
+  cursor: pointer;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-decoration: none;
+}
+
+.close-btn:hover {
+  color: #ccc;
+}

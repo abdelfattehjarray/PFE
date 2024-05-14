@@ -47,6 +47,7 @@ function showPopup() {
 // Function to hide the popup
 function hidePopup() {
     popup.style.display = 'none';
+    document.querySelector(".wrapper").style.display = "block";
 }
 
 fileInput.addEventListener('change', () => {
@@ -139,6 +140,26 @@ function populateSaveForm(data) {
   document.getElementById('number').value = data.numero;
 }
 
+function displaySuccessMessage() {
+    // Hide the popup
+    hidePopup();
+
+       // Create the success message element
+       const successMessage = document.createElement('div');
+       successMessage.classList.add('alert', 'alert-success');
+       successMessage.innerHTML = `
+           <span class="close-btn" onclick="closeSuccessMessage()">&times;</span>
+           Data saved successfully.
+       `;
+       document.body.appendChild(successMessage);
+   }
+// Function to close the success message
+function closeSuccessMessage() {
+    const successMessage = document.querySelector('.alert-success');
+    if (successMessage) {
+        successMessage.remove();
+    }
+}
 // Add event listener to the save button
 document.getElementById('savebutton').addEventListener('click', (event) => {
     event.preventDefault(); // Prevent default form submission
@@ -154,6 +175,8 @@ document.getElementById('savebutton').addEventListener('click', (event) => {
 
     .then(response => {
         // Handle the response from your server
+        displaySuccessMessage();
+
     })
     .catch(error => {
         console.error('Error:', error);

@@ -1,9 +1,10 @@
 import sys
 from django.contrib import messages
 from django.db import IntegrityError
+from django.urls import reverse
 from .models import Client, Fournisseur, BonCommande,Produit, Commande
 from .extractcode import pdf, tablepdf
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -94,8 +95,10 @@ def save_data(request):
                     id_commande=commande,
                     numero=str(number1)
                 )
+                
 
-                return JsonResponse({'message': 'Data saved successfully!'})
+
+                return HttpResponseRedirect(reverse('File')) 
 
             except IntegrityError as e:
                 return JsonResponse({'error': 'Database integrity error: ' + str(e)}, status=400)
