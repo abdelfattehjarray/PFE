@@ -21,7 +21,7 @@
 
 
   <div class="navbar">
-    <div class="logo"><a href=""><img src="static/images/logo.png"/></a></div>
+    <div class="logo"><a href="{% url 'home' %}"><img src="static/images/logo.png"/></a></div>
 
     <input type="checkbox" id="check">
     <label for="check" class="icons">
@@ -41,7 +41,7 @@
                     <ul class="nested-menu">
                         <div class="nm">
                            <li></li>
-                           <li><a href="#">Bon Commandes</a></li>
+                           <li><a href="{% url 'bon_commande' %}">Bon Commandes</a></li>
                            <li><a href="#">Fournisseurs</a></li>
                         </div>
                     </ul>
@@ -133,17 +133,12 @@
         <div class="boncommande-container">
           <h3>bon de commande</h3>
           <div class="boncommande-data">
-            <label for="idbc">identificateur : </label>
-            <input type="text" name="idbc" id="idbc" value="identificateur" >
+        
   
             <label for="date">date : </label>
             <input type="text" name="date" id="date" value="{{date}}" >
   
-            <label for="commande">commande : </label>
-            <input type="text" name="commande" id="commande" value="commande" >
-  
-            <label for="client">client : </label>
-            <input type="text" name="client" id="client" value="{{cname}}" >
+           
   
             <label for="number">number : </label>
             <input type="text" name="number" id="number" value="{{numero}}" >
@@ -153,8 +148,7 @@
         <div class="commande-container">
           <h3>commande</h3>
           <div class="commande-data">
-            <label for="id">id : </label>
-            <input type="text" name="id" id="id" value="id" >
+            
   
             <label for="product">product : </label>
             <input type="text" name="product" id="product" value="{{pname}}" >
@@ -179,8 +173,7 @@
         <div class="product-container">
           <h3>produit</h3>
           <div class="product-data">
-             <label for="idp">produit : </label>
-             <input type="text" name="idp" id="idp" value="idp" >
+             
   
              <label for="namep">name : </label>
              <input type="text" name="namep" id="namep" value="{{pname}}" >
@@ -193,8 +186,7 @@
         <div class="client-container">
           <h3>client</h3>
           <div class="client-data">
-             <label for="idc">id : </label>
-             <input type="text" name="idc" id="idc" value="idc" >
+             
   
              <label for="namec">name : </label>
              <input type="text" name="namec" id="namec" value="{{cname}}" >

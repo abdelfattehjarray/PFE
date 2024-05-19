@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="{% static 'css/home_inter.css' %}">
+<link rel="stylesheet" href="{% static 'css/commandedetails.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -38,7 +38,7 @@
                     <ul class="nested-menu">
                         <div class="nm">
                            <li></li>
-                           <li><a href="{% url 'bon_commande' %}">Bon Commandes</a></li>
+                           <li><a href="#">Bon Commandes</a></li>
                            <li><a href="#">Fournisseurs</a></li>
                         </div>
                     </ul>
@@ -57,20 +57,82 @@
               </ul>
               </li>
          </ul>
-     </div>
+    </div>
   </div>
 
 
+  
+ <div class="table-wrapper">
+
+
+    <h2>Bon de Commande</h2><br>
+    <ul class="objects-list">
+        <li><h3>Fournisseur</h3>
+            <br>
+            <ul class="details-list">
+                <li>identificateur : </li>
+                <li>name : </li>
+                <li>address : </li>
+                <li>sujet : </li>
+                <li>consultation : </li>
+            </ul>
+
+        </li>
+        <br>
+
+
+        <li><h3>Client</h3>
+            <ul class="details-list">
+                
+                <li>name : </li>
+                <li>address : </li>
+                <li>mail : </li>
+                <li>phone : </li>
+                <li>fax : </li>
+                <li>tax_id : </li>
+            </ul>
+        </li>
+
+        <br>
+
+        <li><h3>Commande</h3>
+            <ul class="details-list">
+                <li>quantity : </li>
+                <li>namunitye : </li>
+                <li>price_indiv : </li>
+                <li>price_total : </li>
+                <li>sum : </li>
+            </ul>
+        </li>
+
+        <br>
+
+        <li><h3>Produit</h3>
+            <ul class="details-list">
+                <li>name : </li>
+                <li>characteristic : </li>
+            </ul>
+        </li>
+    </ul>
+   
 
 
 
-<div class="hero">
-    <h1>PFE DATA_EXTRACTION</h1>
-    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-    
-  </div>
+ </div> 
+  
+
+
+
+
+
+
   {% endblock %}
+  
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </html>
 
 

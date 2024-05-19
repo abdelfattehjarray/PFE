@@ -12,6 +12,7 @@ import json
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.cache import cache_control
 sys.stdout.reconfigure(encoding='utf-8')
 
 def save_data(request):
@@ -241,6 +242,17 @@ def login_view(request):
     else:
         return render(request, 'User.html')
     
+
+    
 def logout_view(request):
     logout(request)
-    return redirect('User')
+    return redirect('User', permanent=True)
+
+
+def bon_commande(request):
+    bon_commande = BonCommande.objects.all()
+    return render(request, 'bon_commande.html',{'bon_commande': bon_commande} )
+
+
+def commandedetails(request):
+    return render(request, 'commandedetails.html', {})
