@@ -69,7 +69,7 @@
              
             </select>
           </div>
-          
+          <div id="signup-messages"></div>
           
           <input type="submit" class="btn" value="Sign up" />
           
@@ -114,6 +114,9 @@
 
   <script src="{% static 'js/app.js' %}"></script>
 
+  <script>
+    const UserURL = "{% url 'inscription' %}"; // Pass the URL to JavaScript
+  </script>
   {% endblock %}
 </body>
 

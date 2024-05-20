@@ -9,6 +9,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.contrib.auth.models import User  # Import the User model
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
@@ -45,7 +46,6 @@ def save_data(request):
 
             date1 = request.POST.get('date').encode('utf-8').decode('utf-8') 
             number1 = request.POST.get('number').encode('utf-8').decode('utf-8') 
-            print("data", identificateur1,name1,adresse1,sujet1,consultation1)
             sys.stdout.flush()
 
             try: 
@@ -106,7 +106,7 @@ def save_data(request):
 
             except Exception as e:
                 return JsonResponse({'error': 'An unexpected error occurred: ' + str(e)}, status=500)
-        return redirect("User")
+        return redirect("user")
 
 
 @csrf_exempt
@@ -216,10 +216,14 @@ def home(request):
 
 
 
-def User(request):
+def user(request):
+    
+    return render(request, 'user.html', {} )
+
+
    
 
-    return render(request, 'User.html', {} )
+   
 
 
 
@@ -238,15 +242,15 @@ def login_view(request):
         else:
             # Add an error message to the context
             messages.error(request, 'Wrong username or password, try again!')
-            return redirect('User')
+            return redirect('user')
     else:
-        return render(request, 'User.html')
+        return render(request, 'user.html')
     
 
     
 def logout_view(request):
     logout(request)
-    return redirect('User', permanent=True)
+    return redirect('user', permanent=True)
 
 
 def bon_commande(request):
@@ -255,4 +259,53 @@ def bon_commande(request):
 
 
 def commandedetails(request):
-    return render(request, 'commandedetails.html', {})
+    if request.method == 'GET':
+        try:
+            bon_commande_id = request.GET.get('id')
+            bon_commande = get_object_or_404(BonCommande, pk=bon_commande_id)
+
+            # Extract data from the BonCommande object for the template
+            fournisseur = bon_commande.fournisseur
+            client = bon_commande.id_client
+            commande = bon_commande.id_commande
+            produit = commande.id_produit
+
+            context = {
+                'bon_commande': bon_commande,
+                'fournisseur': fournisseur,
+                'client': client,
+                'commande': commande,
+                'produit': produit
+            }
+
+            return render(request, 'commandedetails.html', context)
+
+        except:
+            return render(request, 'commandedetails.html', {'error': 'Invalid BonCommande ID'})
+    else:
+        return render(request, 'commandedetails.html', {})
+
+
+
+
+
+
+def inscription(request):
+    if request.method == 'POST':
+        username = request.POST.get('firstName')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        lastName = request.POST.get('lastName')
+        statut = request.POST.get('statut')
+
+        # Check for existing username
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'success': False, 'errors': ['Le nom d\'utilisateur est déjà utilisé.']})
+
+        # Create the user with `is_active=False` to set it as inactive
+        User.objects.create_user(username=username, email=email, password=password, first_name=username, last_name=lastName, is_active=False)
+
+        # Send success response
+        return JsonResponse({'success': True, 'message': 'Utilisateur créé avec succès! Veuillez vérifier votre email pour l\'activation.'})
+    
+    return render(request, 'user.html', {})

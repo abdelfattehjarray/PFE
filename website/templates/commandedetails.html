@@ -62,34 +62,29 @@
 
 
   
- <div class="table-wrapper">
-
-
+  <div class="table-wrapper">
     <h2>Bon de Commande</h2><br>
     <ul class="objects-list">
         <li><h3>Fournisseur</h3>
             <br>
             <ul class="details-list">
-                <li>identificateur : </li>
-                <li>name : </li>
-                <li>address : </li>
-                <li>sujet : </li>
-                <li>consultation : </li>
+                <li>identificateur : {{ fournisseur.identificateur }}</li>
+                <li>name : {{ fournisseur.name }}</li>
+                <li>address : {{ fournisseur.address }}</li>
+                <li>sujet : {{ fournisseur.sujet }}</li>
+                <li>consultation : {{ fournisseur.consultation }}</li>
             </ul>
-
         </li>
         <br>
 
-
         <li><h3>Client</h3>
             <ul class="details-list">
-                
-                <li>name : </li>
-                <li>address : </li>
-                <li>mail : </li>
-                <li>phone : </li>
-                <li>fax : </li>
-                <li>tax_id : </li>
+                <li>name : {{ client.name }}</li>
+                <li>address : {{ client.address }}</li>
+                <li>mail : {{ client.mail }}</li>
+                <li>phone : {{ client.phone }}</li>
+                <li>fax : {{ client.fax }}</li>
+                <li>tax_id : {{ client.tax_id }}</li>
             </ul>
         </li>
 
@@ -97,11 +92,11 @@
 
         <li><h3>Commande</h3>
             <ul class="details-list">
-                <li>quantity : </li>
-                <li>namunitye : </li>
-                <li>price_indiv : </li>
-                <li>price_total : </li>
-                <li>sum : </li>
+                <li>quantity : {{ commande.quantity }}</li>
+                <li>namunitye : {{ commande.unity }}</li>
+                <li>price_indiv : {{ commande.price_indiv }}</li>
+                <li>price_total : {{ commande.price_total }}</li>
+                <li>sum : {{ commande.sum }}</li>
             </ul>
         </li>
 
@@ -109,16 +104,12 @@
 
         <li><h3>Produit</h3>
             <ul class="details-list">
-                <li>name : </li>
-                <li>characteristic : </li>
+                <li>name : {{ produit.name }}</li>
+                <li>characteristic : {{ produit.characteristic }}</li>
             </ul>
         </li>
     </ul>
-   
-
-
-
- </div> 
+  </div>
   
 
 
