@@ -23,21 +23,22 @@ signupForm.addEventListener("submit", (event) => {
   })
   .then(response => {
     if (response.ok) {
+      signupMessages.innerHTML = `<p class="success">account created, wait for verification...</p>`; 
+      signupForm.reset();
       return response.json();
     } else {
       throw new Error('Error during signup');
     }
   })
   .then(data => {
-    if (data.success_message) {
-      signupMessages.innerHTML = `<p class="success">${data.success_message}</p>`; // Display success message
-      signupForm.reset(); // Reset the form
-    } else if (data.error_message) {
-      signupMessages.innerHTML = `<p class="error">${data.error_message}</p>`; // Display error message
+    if (data && data.errors) {
+      // Display error message(s)
+      let errorMessage = '<ul class="errors">';
+      data.errors.forEach(error => errorMessage += `<li>${error}</li>`);
+      errorMessage += '</ul>';
+      signupMessages.innerHTML = errorMessage;
     }
+    
   })
-  .catch(error => {
-    console.error('Signup error:', error);
-    signupMessages.innerHTML = `<p class="error">Une erreur s'est produite. Veuillez réessayer.</p>`;
-  });
+ 
 });

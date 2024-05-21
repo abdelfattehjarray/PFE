@@ -141,7 +141,9 @@ def File(request):
         
             # Extract Produit data
             produit_name = table_data[4][0]
-            produit_characteristic = "\n".join(table_data[4])
+            produit_characteristic=""
+            for item in table_data[4]:
+               produit_characteristic +=  item+ "\n"
        
 
             # Extract Commande data
@@ -301,11 +303,18 @@ def inscription(request):
         # Check for existing username
         if User.objects.filter(username=username).exists():
             return JsonResponse({'success': False, 'errors': ['Le nom d\'utilisateur est déjà utilisé.']})
+        else :
 
-        # Create the user with `is_active=False` to set it as inactive
-        User.objects.create_user(username=username, email=email, password=password, first_name=username, last_name=lastName, is_active=False)
+         # Create the user with `is_active=False` to set it as inactive
+         User.objects.create_user(username=username, email=email, password=password, first_name=username, last_name=lastName, is_active=False)
 
         # Send success response
-        return JsonResponse({'success': True, 'message': 'Utilisateur créé avec succès! Veuillez vérifier votre email pour l\'activation.'})
-    
+         return JsonResponse({'success': True})    
     return render(request, 'user.html', {})
+
+
+def deletecommande(request):
+    id=request.POST.get('id')
+    BC=BonCommande.objects.get(id=id)
+    BC.delete()
+    return redirect('bon_commande')

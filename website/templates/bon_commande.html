@@ -71,6 +71,7 @@
                 <th scope="col">Fournisseurs</th>
                 <th scope="col">commande</th>
                 <th scope="col">details</th>
+                <th scope="col">Action</th>
               </tr>
         </thead>
             
@@ -81,7 +82,13 @@
                     <td>{{ item.date }}</td>
                     <td>{{ item.fournisseur.name }}</td>
                     <td>{{ item.id_commande.id_produit.name }}</td>
-                     <td><button class="details-button" data-item-id="{{ item.id }}">Details</button></td> 
+                    <td><button class="details-button" data-item-id="{{ item.id }}">Details</button></td> 
+                    <td>
+                      <form method="POST" action="{% url 'deletecommande'%}">{% csrf_token %}
+                        <input type="hidden" name="id" value={{item.id}}>
+                        <input type="submit"  value="Delete" class="btn-danger">
+                      </form>
+                  </td>
                 </tr>
                 {% endfor %}
         </tbody>

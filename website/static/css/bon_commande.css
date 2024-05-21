@@ -296,3 +296,41 @@ body {
   color: #fff;
   cursor: pointer;
 }
+
+
+
+.btn-danger {
+  background: #ff0800;
+  border: 1px solid #ff0800;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 16px;
+  height: 35px;
+  outline: 0;
+  padding: 5px 12px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.btn-danger:hover,
+.btn-danger:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #ff0800;
+}
+
+.btn-danger:active {
+  opacity: .5;
+}
