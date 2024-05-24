@@ -38,14 +38,14 @@
                     <ul class="nested-menu">
                         <div class="nm">
                            <li></li>
-                           <li><a href="#">Bon Commandes</a></li>
-                           <li><a href="#">Fournisseurs</a></li>
+                           <li><a href="{% url 'bon_commande' %}">Purchase order</a></li>
+                           <li><a href="{% url 'gestionf' %}">Supplier</a></li>
                         </div>
                     </ul>
                 
               </li>
               {% if request.user.is_superuser %} 
-              <li ><a href="#">Users confirmation</a> </li>
+              <li ><a href="#">Users</a> </li>
               {% endif %}
               <li><a href="#"><i class="fas fa-user"></i></a>
                 <ul class="nested-menu2">
@@ -63,10 +63,10 @@
 
   
   <div class="table-wrapper">
-    <h2>Bon de Commande</h2><br>
+    <h2>Purchase order</h2><br>
     <table class="objects-list">
         <tr>
-            <th>Fournisseur</th>
+            <th>Supplier</th>
             <th>Client</th>
         </tr>
         
@@ -80,10 +80,10 @@
 
          <td>
             <ul class="details-list">
-                <li>identificateur : {{ fournisseur.identificateur }}</li>
+                <li>identifier : {{ fournisseur.identificateur }}</li>
                 <li>name : {{ fournisseur.name }}</li>
                 <li>address : {{ fournisseur.address }}</li>
-                <li>sujet : {{ fournisseur.sujet }}</li>
+                <li>subject : {{ fournisseur.sujet }}</li>
                 <li>consultation : {{ fournisseur.consultation }}</li>
             </ul>
          </td>
@@ -102,8 +102,8 @@
         </tr>
 
         <tr>
-            <th>Commande</th>
-            <th>Produit</th>
+            <th>Order</th>
+            <th>Product</th>
         </tr>
 
         <tr>
@@ -111,9 +111,9 @@
         <td>
             <ul class="details-list">
                 <li>quantity : {{ commande.quantity }}</li>
-                <li>namunitye : {{ commande.unity }}</li>
-                <li>price_indiv : {{ commande.price_indiv }}</li>
-                <li>price_total : {{ commande.price_total }}</li>
+                <li>unitye : {{ commande.unity }}</li>
+                <li>individual price : {{ commande.price_indiv }}</li>
+                <li>total price: {{ commande.price_total }}</li>
                 <li>sum : {{ commande.sum }}</li>
             </ul>
         </td>

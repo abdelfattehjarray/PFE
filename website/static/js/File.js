@@ -152,6 +152,8 @@ function displaySuccessMessage() {
            Data saved successfully.
        `;
        document.body.appendChild(successMessage);
+       setTimeout(function() {
+        successMessage.style.display = 'none';  }, 1500);
    }
 // Function to close the success message
 function closeSuccessMessage() {
@@ -165,7 +167,7 @@ document.getElementById('savebutton').addEventListener('click', (event) => {
     event.preventDefault(); // Prevent default form submission
     const saveFormData = new FormData(saveForm); // Create FormData from saveForm
   
-    fetch(saveDataURL, { // Assuming 'save_data' is your view URL
+    fetch(saveDataURL, { 
         method: 'POST',
         body: saveFormData,
         headers: {
@@ -176,6 +178,7 @@ document.getElementById('savebutton').addEventListener('click', (event) => {
     .then(response => {
         // Handle the response from your server
         displaySuccessMessage();
+        hidePopup();
 
     })
     .catch(error => {

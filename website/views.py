@@ -99,7 +99,7 @@ def save_data(request):
                 
 
 
-                return HttpResponseRedirect(reverse('File')) 
+                return redirect('File') 
 
             except IntegrityError as e:
                 return JsonResponse({'error': 'Database integrity error: ' + str(e)}, status=400)
@@ -256,24 +256,24 @@ def logout_view(request):
 
 
 def bon_commande(request):
-    bon_commande = BonCommande.objects.all()
-    return render(request, 'bon_commande.html',{'bon_commande': bon_commande} )
+    boncommande = BonCommande.objects.all()
+    return render(request, 'bon_commande.html',{'boncommande': boncommande} )
 
 
 def commandedetails(request):
     if request.method == 'GET':
         try:
-            bon_commande_id = request.GET.get('id')
-            bon_commande = get_object_or_404(BonCommande, pk=bon_commande_id)
+            boncommande_id = request.GET.get('id')
+            boncommande = get_object_or_404(BonCommande, pk=boncommande_id)
 
             # Extract data from the BonCommande object for the template
-            fournisseur = bon_commande.fournisseur
-            client = bon_commande.id_client
-            commande = bon_commande.id_commande
+            fournisseur = boncommande.fournisseur
+            client = boncommande.id_client
+            commande = boncommande.id_commande
             produit = commande.id_produit
 
             context = {
-                'bon_commande': bon_commande,
+                'boncommande': boncommande,
                 'fournisseur': fournisseur,
                 'client': client,
                 'commande': commande,
@@ -286,6 +286,39 @@ def commandedetails(request):
             return render(request, 'commandedetails.html', {'error': 'Invalid BonCommande ID'})
     else:
         return render(request, 'commandedetails.html', {})
+
+
+
+
+
+
+
+def gestionf(request):
+    f_ournisseur = Fournisseur.objects.all()
+  
+    return render(request, 'gestionfournisseur.html',{'f_ournisseur': f_ournisseur} )
+
+
+def Fcommande(request):
+    if request.method == 'GET':
+        f_id = request.GET.get('id')
+        if f_id:
+            try:
+                f = get_object_or_404(Fournisseur, pk=f_id)
+                bon_commandes = BonCommande.objects.filter(fournisseur=f)
+                context = {'f': f, 'bon_commandes': bon_commandes}
+                return render(request, 'Fcommande.html', context)
+            except:
+                return render(request, 'Fcommande.html', {'error': 'Invalid ID'})
+        else:
+            # Handle case where no 'id' is provided 
+            f_ournisseur = Fournisseur.objects.all()
+            return render(request, 'Fcommande.html', {'f_ournisseur': f_ournisseur})
+    else:
+        return render(request, 'Fcommande.html', {})
+
+
+
 
 
 
@@ -318,3 +351,19 @@ def deletecommande(request):
     BC=BonCommande.objects.get(id=id)
     BC.delete()
     return redirect('bon_commande')
+
+
+def deletecf(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        supplier_id = request.POST.get('supplier_id')
+        B_C = BonCommande.objects.get(id=id)
+        B_C.delete()
+        return redirect(reverse('Fcommande') + f'?id={supplier_id}') 
+    return redirect('Fcommande')
+
+def deletef(request):
+    id=request.POST.get('id')
+    fr=Fournisseur.objects.get(id=id)
+    fr.delete()
+    return redirect('gestionf')

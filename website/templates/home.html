@@ -38,14 +38,14 @@
                     <ul class="nested-menu">
                         <div class="nm">
                            <li></li>
-                           <li><a href="{% url 'bon_commande' %}">Bon Commandes</a></li>
-                           <li><a href="#">Fournisseurs</a></li>
+                           <li><a href="{% url 'bon_commande' %}">Purchase order</a></li>
+                           <li><a href="{% url 'gestionf' %}">Supplier</a></li>
                         </div>
                     </ul>
                 
               </li>
               {% if request.user.is_superuser %} 
-              <li ><a href="#">Users confirmation</a> </li>
+              <li ><a href="#">Users</a> </li>
               {% endif %}
               <li><a href="#"><i class="fas fa-user"></i></a>
                 <ul class="nested-menu2">

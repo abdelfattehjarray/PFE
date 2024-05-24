@@ -12,6 +12,10 @@ urlpatterns = [
     path('commandedetails', views.commandedetails, name='commandedetails'),
     path('inscription', views.inscription, name='inscription'),
     path('deletecommande', views.deletecommande, name='deletecommande'),
+    path('gestionf', views.gestionf, name='gestionf'),
+    path('Fcommande', views.Fcommande, name='Fcommande'),
+    path('deletecf', views.deletecf, name='deletecf'),
+    path('deletef', views.deletef, name='deletef'),
     
 
 ]

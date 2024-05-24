@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="{% static 'css/bon_commande.css' %}">
+<link rel="stylesheet" href="{% static 'css/Fcommande.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -62,32 +62,36 @@
 
 
   
+ {% if bon_commandes %} 
+  
  <div class="table-wrapper">
-  <div class="tabletitle">
-    <h2 >Purchase orders</h2></div>
+    <div class="tabletitle">
+        <h2 >the purchase orders with  "{{f.name}}"</h2></div>
+    
     <table class="table table-striped table-rounded">
         <thead>
               <tr>
                 <th scope="col">Number</th>
                 <th scope="col">date</th>
-                <th scope="col">Supplier</th>
                 <th scope="col">order</th>
+                <th scope="col">Client</th>
                 <th scope="col">details</th>
                 <th scope="col">Action</th>
               </tr>
         </thead>
             
         <tbody class="table-group-divider">
-                {% for item in boncommande %}
+                {% for item in bon_commandes %}
                 <tr scope="row">
                     <td>{{ item.numero }}</td>
                     <td>{{ item.date }}</td>
-                    <td>{{ item.fournisseur.name }}</td>
                     <td>{{ item.id_commande.id_produit.name }}</td>
+                    <td>{{ item.id_client.name }}</td>
                     <td><button class="details-button" data-item-id="{{ item.id }}">Details</button></td> 
                     <td>
-                      <form method="POST" action="{% url 'deletecommande'%}">{% csrf_token %}
+                      <form method="POST" action="{% url 'deletecf' %}">{% csrf_token %}
                         <input type="hidden" name="id" value={{item.id}}>
+                        <input type="hidden" name="supplier_id" value="{{ f.id }}">
                         <input type="submit"  value="Delete" class="btn-danger">
                       </form>
                   </td>
@@ -101,10 +105,15 @@
 
 
  </div> 
+ {% else %} 
+ <div class="emty">
+    <p>No orders with this supplier.</p>
+ </div>
+ {% endif %}
   
 
 
- <script src="{% static 'js/cm.js' %}"></script>
+ <script src="{% static 'js/fc.js' %}"></script>
 
 
 
