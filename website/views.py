@@ -349,6 +349,7 @@ def inscription(request):
 def deletecommande(request):
     id=request.POST.get('id')
     BC=BonCommande.objects.get(id=id)
+    
     BC.delete()
     return redirect('bon_commande')
 
@@ -358,6 +359,7 @@ def deletecf(request):
         id = request.POST.get('id')
         supplier_id = request.POST.get('supplier_id')
         B_C = BonCommande.objects.get(id=id)
+        
         B_C.delete()
         return redirect(reverse('Fcommande') + f'?id={supplier_id}') 
     return redirect('Fcommande')

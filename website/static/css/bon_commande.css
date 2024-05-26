@@ -7,23 +7,35 @@
 }
 body {
 
-
+  display: flex;
   align-items: center;
   min-height: 100vh;
+  justify-content: center; 
+
   background: #000000;
-  background-color: #000;
+  background-image: url('../images/02.jpg'); 
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat; 
+    
+
 
   }
   
   .navbar {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    padding-top: 2rem;
+    padding-left: 7rem;
+    padding-right: 7rem;
     position: absolute;
     top: 0;
-    width:100%;
+    height: 7rem;
+    width: 100%;
+    
+    
+    
   }
-  
   .navbar ul {
     list-style: none;
     display: flex; /* Keep horizontal layout on larger screens */
@@ -67,7 +79,7 @@ body {
   
   .nested-menu a {
     color: #fff;
-    padding: 0.5rem 1rem;
+    padding: 0.2rem 1rem;
     display: block;
     text-decoration: none;
     text-align: center;
@@ -90,7 +102,7 @@ body {
     background-color: none;
     min-width: 190px;
     z-index: 1;
-    left: -100;
+    left: -70;
     padding-top: 20px;
   }
   
@@ -102,7 +114,7 @@ body {
   
   .nested-menu2 a {
     color: #fff;
-    padding: 0.5rem 1rem;
+    padding: 0.2rem 1rem;
     display: block;
     text-decoration: none;
     text-align: center;
@@ -115,7 +127,7 @@ body {
   
   .logo img{
     padding-left: 5%;
-    height: 60%;
+    height: 80%;
   }
   
   .menubar {
@@ -147,9 +159,10 @@ body {
     cursor: pointer;
     display: none;
   }
-
   @media  (max-width: 992px) {
-
+    .big-container{
+      margin-top: 20%;
+    }
     .body .navbar{
         padding: 1.3rem 5%;
     }
@@ -160,28 +173,38 @@ body {
         cursor: pointer;
         display: none;
       }
-
+  
+  
+      
+  
   }
-
-
+  
+  
   @media (max-width: 768px) {
-
-
+   
+  
+    .big-container{
+      margin-top: 30%;
+    }
+  
+  
+  
     #check:checked~.icons #menu-icon{
         display: none;
     }
     .icons {
-      right: 5%;
+      right: 8%;
       position: absolute;
       font-size: 2.8rem;
       color: white;
       cursor: pointer;
       display: block;
+      text-align: right;
     }
     .icons #close-icon{
         display: none;
     }
-
+  
     #check:checked~.icons #close-icon{
         display: block;
     }
@@ -197,11 +220,12 @@ body {
       overflow: hidden;
       transition: 0.3s ease;
       background-color: #000;
+      z-index: 9999;
     }
-
+  
    
     
-
+  
     #check:checked~.menubar{
         display: block;
     }
@@ -215,10 +239,10 @@ body {
     .navbar .menubar li {
       padding: 1rem 0;
     }
-
+  
     .menubar a {
         font-size: large;
-
+  
     }
   
     .nested-menu a {
@@ -229,12 +253,63 @@ body {
       
     
     }
-
+    .nested-menu2 a {
+      margin-left: 30;
+      color: #fff;
+      padding: 0;
+      display: block;
+      text-decoration: none;
+      text-align: center;
+  
+    }
+  
+    .nm {
+      
+      background-color: #000;
+      
+    }
     
   
-
-  }
+    
   
+  
+    body .popup.active{
+      margin-right: 3%;
+      width: 90%;
+      margin-left: 8%;
+      display: inline-block;
+      
+      opacity: 1;
+      border-radius: 15px;
+      transform: translate(-3%,-40%) scale(1);
+      transition: top 0ms ease-in-out 0ms, 
+                  opacity 200ms ease-in-out, 
+                  transform 200ms ease-in-out 0ms; 
+      padding:5%;
+    }
+
+    .table-rounded {
+      border-radius: 15px;
+      overflow: hidden;
+    }
+  
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 15px;
+      margin: 150px 0;
+      padding: 0 10px;
+    }
+  
+    .tabletitle {
+      margin: 20px;
+      padding: 12px;
+      border: none;
+      text-align: center;
+      background: #797878;
+      border-radius: 15px;
+    }
+  
+  }
 
 
 
@@ -262,13 +337,12 @@ body {
     overflow: hidden;
 }
 .table-wrapper {
-    overflow-x: auto;
-    border-radius: 15px;
-    background: #000000;
-    padding: 20px;
-    margin: 150px 0;
-    padding-left: 50px;
-    padding-right: 50px;
+  margin-top: 500px;
+  overflow-x: auto;
+  border-radius: 15px;
+  margin: 150px 0;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 .table-striped tbody tr:nth-of-type(odd) {
     background: #2b2b2b;

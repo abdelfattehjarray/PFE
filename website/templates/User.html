@@ -22,11 +22,11 @@
           <h2 class="title">Log in</h2>
           <div class="input-field">
             <i class="fas fa-envelope"></i>
-            <input type="text" placeholder="Email or username" name="emailL" />
+            <input type="text" placeholder="Email or username" name="emailL" required />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" name="passwordL" />
+            <input type="password" placeholder="Password" name="passwordL" required/>
           </div>
           {% if messages %}
             <ul class="messages">
@@ -44,19 +44,19 @@
           <h2 class="title">Sign up</h2>
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="firstName" name="firstName" />
+            <input type="text" placeholder="firstName" name="firstName" required/>
           </div>
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="lastName" name="lastName" />
+            <input type="text" placeholder="lastName" name="lastName" required/>
           </div>
           <div class="input-field">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email" name="email" id="emailid"/>
+            <input type="email" placeholder="Email" name="email" id="emailid" required/>
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" name="password" />
+            <input type="password" placeholder="Password" name="password" required/>
           </div>
           <div class="input-field">
             <i class="fas fa-user"></i>
@@ -114,7 +114,7 @@
   <script src="{% static 'js/app.js' %}"></script>
 
   <script>
-    const UserURL = "{% url 'inscription' %}"; // Pass the URL to JavaScript
+    const UserURL = "{% url 'inscription' %}"; 
   </script>
   {% endblock %}
 </body>

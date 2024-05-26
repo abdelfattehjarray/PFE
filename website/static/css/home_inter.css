@@ -10,18 +10,31 @@ body {
   display: flex;
   align-items: center;
   min-height: 100vh;
+  justify-content: flex-end;
+
   background: #000000;
-    
+  background-image: url('../images/02.jpg'); 
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  
+
 
   }
   
   .navbar {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    padding-top: 2rem;
+    padding-left: 7rem;
+    padding-right: 7rem;
     position: absolute;
     top: 0;
-    width:100%;
+    height: 7rem;
+    width: 100%;
+    
+    
+    
   }
   
   .navbar ul {
@@ -44,9 +57,10 @@ body {
   }
   
   .hero {
-    text-align: center;
+    text-align: center; /* Optional: Align text to the left */
     padding: 2rem;
-    margin: 0 auto;
+    max-width: 50%; /* Adjust the width as needed */
+    margin-right: 2rem; /* Add some margin to the right */
   }
   
   .hero h1 {
@@ -84,7 +98,7 @@ body {
   
   .nested-menu a {
     color: #fff;
-    padding: 0.5rem 1rem;
+    padding: 0.2rem ;
     display: block;
     text-decoration: none;
     text-align: center;
@@ -107,7 +121,7 @@ body {
     background-color: none;
     min-width: 190px;
     z-index: 1;
-    left: -100;
+    left: -70;
     padding-top: 20px;
   }
   
@@ -119,7 +133,7 @@ body {
   
   .nested-menu2 a {
     color: #fff;
-    padding: 0.5rem 1rem;
+    padding: 0.2rem 1rem;
     display: block;
     text-decoration: none;
     text-align: center;
@@ -132,7 +146,7 @@ body {
   
   .logo img{
     padding-left: 5%;
-    height: 60%;
+    height: 80%;
   }
   
   .menubar {
