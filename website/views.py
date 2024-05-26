@@ -2,6 +2,8 @@ import sys
 from django.contrib import messages
 from django.db import IntegrityError
 from django.urls import reverse
+from django.core.mail import send_mail 
+from pfe.settings import EMAIL_HOST_USER
 from .models import Client, Fournisseur, BonCommande,Produit, Commande
 from .extractcode import pdf, tablepdf
 from django.http import HttpResponse, HttpResponseRedirect
@@ -214,18 +216,37 @@ def home(request):
     return render(request, 'home.html', {} )
 
 
-
-
-
-
 def user(request):
     
     return render(request, 'user.html', {} )
 
+def userinterface(request):
+    activeusers = User.objects.filter(is_active=True)
+    inactive_users=User.objects.filter(is_active=False)
 
-   
 
+    return render(request, 'userinterface.html', {'activeusers': activeusers, 'inactive_users':inactive_users})
    
+def activate_user(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('id')
+        try:
+            user = User.objects.get(pk=user_id)
+            user.is_active = True
+            user.save()
+
+
+            subject = 'Your account is now active!'
+            message = f"Hello {user.username},\n\nYour account is now active. You can now log in to the system.\n\nBest regards,\nThe FSG Team"
+            from_email = EMAIL_HOST_USER
+            recipient_list = [user.email]
+            send_mail(subject, message, from_email, recipient_list)
+            return redirect('userinterface')  # Redirect to the userinterface view
+        except User.DoesNotExist:
+            return render(request, 'userinterface.html', {'error_message': 'User not found'})
+    else:
+        return render(request, 'userinterface.html', {'error_message': 'Invalid request'})
+
 
 
 
@@ -369,3 +390,12 @@ def deletef(request):
     fr=Fournisseur.objects.get(id=id)
     fr.delete()
     return redirect('gestionf')
+
+
+def deleteuser(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        user = User.objects.get(pk=id)
+        user.delete()
+        return redirect('userinterface') 
+    return redirect('userinterface')

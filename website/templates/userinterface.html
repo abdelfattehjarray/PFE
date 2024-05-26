@@ -1,0 +1,159 @@
+{% load static %}
+
+{% block content %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'css/userinterface.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+
+
+<title>FSG</title>
+
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo"><a href="{% url 'home' %}"><img src="static/images/logo.png"/></a></div>
+
+    <input type="checkbox" id="check">
+    <label for="check" class="icons">
+        <i class="bx bx-menu" id="menu-icon"></i>
+        <i class="bx bx-x" id="close-icon"></i>
+    </label>
+
+
+    <div class="menubar">
+         <ul class="mbar">
+             <li><a href="File">New FIle</a></li>
+             
+             <li class="active">
+                 <a href="#">Data Managements</a>
+
+                  
+                    <ul class="nested-menu">
+                        <div class="nm">
+                           <li></li>
+                           <li><a href="{% url 'bon_commande' %}">Purchase order</a></li>
+                           <li><a href="{% url 'gestionf' %}">Supplier</a></li>
+                        </div>
+                    </ul>
+                
+              </li>
+              {% if request.user.is_superuser %} 
+              <li ><a href="#">Users</a> </li>
+              {% endif %}
+              <li><a href="#"><i class="fas fa-user"></i></a>
+                <ul class="nested-menu2">
+                  <div class="nm2">
+                     <li></li>
+                     <li><a href="#">settings</a></li>
+                     <li><a href="{% url 'logout_view' %}">logout</a></li>
+                  </div>
+              </ul>
+              </li>
+         </ul>
+     </div>
+  </div>
+
+
+
+
+
+    <div class="table-wrapper">
+
+        <div class="tabletitle"><h2 >Inactive Users</h2></div>
+
+    
+        <table class="table table-striped table-rounded">
+            <thead>
+                  <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">lastname</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Action</th>
+                  </tr>
+            </thead>
+                
+            <tbody class="table-group-divider">
+                    {% for item in inactive_users %}
+                    <tr scope="row">
+                        <td>{{ item.username }}</td>
+                        <td>{{ item.last_name }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>
+                          <form method="POST" action="{% url 'deleteuser' %}">{% csrf_token %}
+                            <input type="hidden" name="id" value={{item.id}}>
+                            <input type="submit"  value="Delete" class="btn-danger">
+                            <input type="submit" class="active-btn" value="Active">
+                          </form>
+                      </td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+                
+        </table>
+
+
+    
+        <div class="tabletitle"><h2 >Active Users</h2></div>
+        <table class="table table-striped table-rounded">
+            <thead>
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">lastname</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Action</th>
+                </tr>
+            </thead>
+              
+            <tbody class="table-group-divider">
+                  {% for item in activeusers %}
+                  <tr scope="row">
+                      <td>{{ item.username }}</td>
+                      <td>{{ item.last_name }}</td>
+                      <td>{{ item.email }}</td>
+                      <td>
+                        <form method="POST" action="{% url 'deleteuser' %}">{% csrf_token %}
+                          <input type="hidden" name="id" value={{item.id}}>
+                          <input type="submit"  value="Delete" class="btn-danger">
+                        </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+            </tbody>
+              
+        </table>
+
+    </div> 
+    
+  
+  
+  
+  
+  
+
+
+  
+  
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+
+
+
+
+
+  {% endblock %}
+</body>
+</html>
+
+
+
+

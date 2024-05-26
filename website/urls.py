@@ -16,6 +16,9 @@ urlpatterns = [
     path('Fcommande', views.Fcommande, name='Fcommande'),
     path('deletecf', views.deletecf, name='deletecf'),
     path('deletef', views.deletef, name='deletef'),
+    path('userinterface', views.userinterface, name='userinterface'),
+    path('activate_user', views.activate_user, name='activate_user'),
+    path('deleteuser', views.deleteuser, name='deleteuser'),
     
 
 ]
