@@ -89,13 +89,15 @@ body {
   left: 0%;
 }
 
-.nested-menu2 {
-  left: -130;
-}
+
 
 .navbar li:hover .nested-menu,
 .navbar li:hover .nested-menu2 {
   display: block;
+}
+.navbar li:hover .nested-menu2 {
+  display: block;
+  left: -75;
 }
 
 .nested-menu a,

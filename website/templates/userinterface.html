@@ -75,7 +75,9 @@
                     <th scope="col">Username</th>
                     <th scope="col">lastname</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Activate</th>
+                    <th scope="col">Permissions</th>
                   </tr>
             </thead>
                 
@@ -89,9 +91,26 @@
                           <form method="POST" action="{% url 'deleteuser' %}">{% csrf_token %}
                             <input type="hidden" name="id" value={{item.id}}>
                             <input type="submit"  value="Delete" class="btn-danger">
-                            <input type="submit" class="active-btn" value="Active">
                           </form>
+                        </td>
+
+                        <form method="POST" action="{% url 'activate_user' %}">{% csrf_token %}
+                        <td>
+                          
+                              <input type="hidden" name="id" value={{item.id}}>
+                              <button type="submit" class="active-btn" data-user-id="{{ item.id }}">Active</button>
+                              
+                          
                       </td>
+                      <td>
+                          <select name="permission">
+                              <option value="viewer" >viewer</option>
+                              <option value="staff" {% if item.is_staff %}selected{% endif %}>Staff</option>
+                              <option value="superuser" {% if item.is_superuser %}selected{% endif %}>Superuser</option>
+                          </select>
+                      </td>
+                    </form>
+                        
                     </tr>
                     {% endfor %}
             </tbody>
@@ -107,6 +126,7 @@
                   <th scope="col">Username</th>
                   <th scope="col">lastname</th>
                   <th scope="col">Email</th>
+                  <th scope="col">Permissions</th> 
                   <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -117,6 +137,15 @@
                       <td>{{ item.username }}</td>
                       <td>{{ item.last_name }}</td>
                       <td>{{ item.email }}</td>
+                      <td>
+                        {% if item.is_superuser %}
+                            Superuser
+                        {% elif item.is_staff %}
+                            Staff
+                        {% else %}
+                            None
+                        {% endif %}
+                    </td>
                       <td>
                         <form method="POST" action="{% url 'deleteuser' %}">{% csrf_token %}
                           <input type="hidden" name="id" value={{item.id}}>

@@ -402,4 +402,60 @@ body {
     color: #fff;
     cursor: pointer;
   }
+
+  /* Basic Styling */
+select[name="permission"] {
+  width: 150px; /* Adjust width as needed */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white; /* Optional background color */
+  appearance: none; /* Remove default arrow */
+}
+
+/* Style the dropdown arrow */
+select[name="permission"]::-ms-expand {
+  display: none; /* For IE */
+}
+
+select[name="permission"]::-ms-value {
+  background-color: transparent; /* For IE */
+}
+
+/* Add custom arrow */
+select[name="permission"]::after {
+  content: "\f078"; /* Font Awesome icon for arrow down */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  pointer-events: none; /* Prevent arrow from getting clicks */
+}
+
+/* Focus styles */
+select[name="permission"]:focus {
+  outline: none;
+  border-color: #007bff; /* Blue border on focus */
+  box-shadow: 0 0 0 2px #007bff; /* Blue outline on focus */
+}
+
+/* Style the options */
+select[name="permission"] option {
+  font-size: 16px;
+  background-color: white; /* Optional background color for options */
+  color: black; /* Optional color for options */
+}
+
+/* Hover styles for options (optional) */
+select[name="permission"] option:hover {
+  background-color: #f0f0f0;
+}
+
+/* Style the selected option (optional) */
+select[name="permission"] option:checked {
+  background-color: #e9ecef;
+}
   

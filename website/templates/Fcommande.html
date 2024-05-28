@@ -76,27 +76,31 @@
                 <th scope="col">order</th>
                 <th scope="col">Client</th>
                 <th scope="col">details</th>
+                {% if request.user.is_superuser or request.user.is_staff %}
                 <th scope="col">Action</th>
+                {% endif %}
               </tr>
         </thead>
             
         <tbody class="table-group-divider">
-                {% for item in bon_commandes %}
-                <tr scope="row">
+              {% for item in bon_commandes %}
+              <tr scope="row">
                     <td>{{ item.numero }}</td>
                     <td>{{ item.date }}</td>
                     <td>{{ item.id_commande.id_produit.name }}</td>
                     <td>{{ item.id_client.name }}</td>
                     <td><button class="details-button" data-item-id="{{ item.id }}">Details</button></td> 
+                    {% if request.user.is_superuser or request.user.is_staff %}
                     <td>
                       <form method="POST" action="{% url 'deletecf' %}">{% csrf_token %}
                         <input type="hidden" name="id" value={{item.id}}>
                         <input type="hidden" name="supplier_id" value="{{ f.id }}">
                         <input type="submit"  value="Delete" class="btn-danger">
                       </form>
-                  </td>
-                </tr>
-                {% endfor %}
+                    </td>
+                    {% endif %}
+              </tr>
+              {% endfor %}
         </tbody>
             
     </table>

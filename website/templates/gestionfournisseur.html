@@ -74,7 +74,9 @@
                 <th scope="col">Subject</th>
                 <th scope="col">consultation</th>
                 <th scope="col">details</th>
+                {% if request.user.is_superuser or request.user.is_staff %}
                 <th scope="col">Action</th>
+                {% endif %}
               </tr>
         </thead>
             
@@ -87,12 +89,14 @@
                     <td>{{ item.sujet }}</td>
                     <td>{{ item.consultation }}</td>
                     <td><button class="details-button" data-item-id="{{ item.id }}">Details</button></td> 
+                    {% if request.user.is_superuser or request.user.is_staff %}
                     <td>
                       <form method="POST" action="{% url 'deletef'%}">{% csrf_token %}
                         <input type="hidden" name="id" value={{item.id}}>
                         <input type="submit"  value="Delete" class="btn-danger">
                       </form>
                   </td>
+                  {% endif %}
                 </tr>
                 {% endfor %}
         </tbody>
