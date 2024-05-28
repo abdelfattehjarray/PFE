@@ -75,6 +75,7 @@
                     <th scope="col">Username</th>
                     <th scope="col">lastname</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Delete</th>
                     <th scope="col">Activate</th>
                     <th scope="col">Permissions</th>
@@ -87,6 +88,7 @@
                         <td>{{ item.username }}</td>
                         <td>{{ item.last_name }}</td>
                         <td>{{ item.email }}</td>
+                        <td>{{ item.user_status }}</td> 
                         <td>
                           <form method="POST" action="{% url 'deleteuser' %}">{% csrf_token %}
                             <input type="hidden" name="id" value={{item.id}}>

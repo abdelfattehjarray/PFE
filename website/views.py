@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from django.urls import reverse
 from django.core.mail import send_mail 
 from pfe.settings import EMAIL_HOST_USER
-from .models import Client, Fournisseur, BonCommande,Produit, Commande
+from .models import Client, Fournisseur, BonCommande,Produit, Commande,userstatus
 from .extractcode import pdf, tablepdf
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -17,6 +17,23 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.cache import cache_control
 sys.stdout.reconfigure(encoding='utf-8')
+
+
+
+
+
+def home(request):
+
+    return render(request, 'home.html', {} )
+
+
+def user(request):
+    
+    return render(request, 'user.html', {} )
+
+
+
+#file
 
 def save_data(request):
         if request.method == 'POST':
@@ -211,20 +228,20 @@ def File(request):
 
 
 
-def home(request):
-
-    return render(request, 'home.html', {} )
-
-
-def user(request):
-    
-    return render(request, 'user.html', {} )
 
 
 
 
 
 
+
+
+
+
+
+
+
+#login and sign up
 
 def login_view(request):
     if request.method == 'POST':
@@ -244,12 +261,58 @@ def login_view(request):
         return render(request, 'user.html')
     
 
+def inscription(request):
+    if request.method == 'POST':
+        username = request.POST.get('firstName')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        lastName = request.POST.get('lastName')
+        statut = request.POST.get('statut')
+        print(statut) 
+
+
+        # Check for existing username
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'success': False, 'errors': ['Le nom d\'utilisateur est déjà utilisé.']})
+        else:
+            # Create the user
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                first_name=username,
+                last_name=lastName,
+                is_active=False
+            )
+
+            # Create userstatus after creating the User object
+            userstatus.objects.create(status=statut, id_user=user)
+
+            # Send success response as JSON
+            return JsonResponse({'success': True})
+    return render(request, 'user.html', {})
     
-def logout_view(request):
-    logout(request)
-    return redirect('user', permanent=True)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#boncommandes , commandes
 def bon_commande(request):
     boncommande = BonCommande.objects.all()
     return render(request, 'bon_commande.html',{'boncommande': boncommande} )
@@ -284,9 +347,30 @@ def commandedetails(request):
 
 
 
+def deletecommande(request):
+    id=request.POST.get('id')
+    BC=BonCommande.objects.get(id=id)
+    
+    BC.delete()
+    return redirect('bon_commande')
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #founisseurs 
 
 def gestionf(request):
     f_ournisseur = Fournisseur.objects.all()
@@ -294,6 +378,15 @@ def gestionf(request):
     return render(request, 'gestionfournisseur.html',{'f_ournisseur': f_ournisseur} )
 
 
+def deletef(request):
+    id=request.POST.get('id')
+    fr=Fournisseur.objects.get(id=id)
+    fr.delete()
+    return redirect('gestionf')
+
+
+
+  #boncommande de fournisseur 
 def Fcommande(request):
     if request.method == 'GET':
         f_id = request.GET.get('id')
@@ -313,42 +406,6 @@ def Fcommande(request):
         return render(request, 'Fcommande.html', {})
 
 
-
-
-
-
-
-
-
-def inscription(request):
-    if request.method == 'POST':
-        username = request.POST.get('firstName')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        lastName = request.POST.get('lastName')
-        statut = request.POST.get('statut')
-
-        # Check for existing username
-        if User.objects.filter(username=username).exists():
-            return JsonResponse({'success': False, 'errors': ['Le nom d\'utilisateur est déjà utilisé.']})
-        else :
-
-         # Create the user with `is_active=False` to set it as inactive
-         User.objects.create_user(username=username, email=email, password=password, first_name=username, last_name=lastName, is_active=False)
-
-        # Send success response
-         return JsonResponse({'success': True})    
-    return render(request, 'user.html', {})
-
-
-def deletecommande(request):
-    id=request.POST.get('id')
-    BC=BonCommande.objects.get(id=id)
-    
-    BC.delete()
-    return redirect('bon_commande')
-
-
 def deletecf(request):
     if request.method == 'POST':
         id = request.POST.get('id')
@@ -359,11 +416,14 @@ def deletecf(request):
         return redirect(reverse('Fcommande') + f'?id={supplier_id}') 
     return redirect('Fcommande')
 
-def deletef(request):
-    id=request.POST.get('id')
-    fr=Fournisseur.objects.get(id=id)
-    fr.delete()
-    return redirect('gestionf')
+
+
+
+
+
+
+
+
 
 
 
@@ -377,6 +437,15 @@ def deletef(request):
 def userinterface(request):
     activeusers = User.objects.filter(is_active=True)
     inactive_users=User.objects.filter(is_active=False)
+
+    for inactive_user in inactive_users:
+        # Get the userstatus associated with this user
+        try:
+            user_status = userstatus.objects.get(id_user=inactive_user)
+            inactive_user.user_status = user_status.status
+        except userstatus.DoesNotExist:
+            # If no userstatus exists, set it to "None"
+            inactive_user.user_status = "None"
 
 
     return render(request, 'userinterface.html', {'activeusers': activeusers, 'inactive_users':inactive_users})
@@ -422,3 +491,12 @@ def deleteuser(request):
 
 
 
+
+
+
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('user', permanent=True)

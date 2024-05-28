@@ -22,23 +22,32 @@ signupForm.addEventListener("submit", (event) => {
     body: formData
   })
   .then(response => {
-    if (response.ok) {
-      signupMessages.innerHTML = `<p class="success">account created, wait for verification...</p>`; 
-      signupForm.reset();
-      return response.json();
-    } else {
-      throw new Error('Error during signup');
-    }
-  })
-  .then(data => {
-    if (data && data.errors) {
-      // Display error message(s)
-      let errorMessage = '<ul class="errors">';
-      data.errors.forEach(error => errorMessage += `<li>${error}</li>`);
-      errorMessage += '</ul>';
-      signupMessages.innerHTML = errorMessage;
-    }
-    
-  })
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error during signup');
+      }
+    })
+    .then(data => {
+      if (data.success) { 
+        // Success - display success message
+        signupMessages.innerHTML = `<p class="success">account created, wait for verification...</p>`;
+        signupForm.reset();
+      } else if (data.errors) {
+        // Error - display error message(s)
+        let errorMessage = '<ul class="errors">';
+        data.errors.forEach(error => errorMessage += `<li>${error}</li>`);
+        errorMessage += '</ul>';
+        signupMessages.innerHTML = errorMessage;
+      } else {
+        // Handle unexpected response
+        signupMessages.innerHTML = '<p class="error">Unexpected error occurred.</p>';
+      }
+    })
+    .catch(error => {
+      // Handle general errors
+      console.error("Error during signup:", error);
+      signupMessages.innerHTML = '<p class="error">An error occurred. Please try again.</p>';
+    });
  
 });
