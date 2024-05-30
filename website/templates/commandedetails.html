@@ -61,89 +61,82 @@
   </div>
 
 
-  
-  <div class="table-wrapper">
-    <h2>Purchase order N:{{boncommande.numero}}</h2><br>
-    <table class="objects-list">
-        <tr>
-            <th>Supplier</th>
-            <th>Client</th>
-        </tr>
-        
+  <div class="content-wrapper">
+    <div class="card">
+      <h2>Purchase Order N:{{boncommande.numero}}</h2>
+    </div>
 
+    <div class="card">
+      <div class="section-title">Supplier</div>
+      <ul class="details-list">
+        <li><span>Identifier:</span> {{ fournisseur.identificateur }}</li>
+        <li><span>Name:</span> {{ fournisseur.name }}</li>
+        <li><span>Address:</span> {{ fournisseur.address }}</li>
+        <li><span>Subject:</span> {{ fournisseur.sujet }}</li>
+        <li><span>Consultation:</span> {{ fournisseur.consultation }}</li>
+      </ul>
+    </div>
 
+    <div class="card">
+      <div class="section-title">Client</div>
+      <ul class="details-list">
+        <li><span>Name:</span> {{ client.name }}</li>
+        <li><span>Address:</span> {{ client.address }}</li>
+        <li><span>Email:</span> {{ client.mail }}</li>
+        <li><span>Phone:</span> {{ client.phone }}</li>
+        <li><span>Fax:</span> {{ client.fax }}</li>
+        <li><span>Tax ID:</span> {{ client.tax_id }}</li>
+      </ul>
+      <button class="edit-btn" data-id="{{ client.id }}" data-type="client" data-boncommande-id="{{ boncommande.id }}">Edit</button>
+    </div>
 
+    <div class="card">
+      <div class="section-title">Order</div>
+      <ul class="details-list">
+        <li><span>Quantity:</span> {{ commande.quantity }}</li>
+        <li><span>Unit:</span> {{ commande.unity }}</li>
+        <li><span>Individual Price:</span> {{ commande.price_indiv }}</li>
+        <li><span>Total Price:</span> {{ commande.price_total }}</li>
+        <li class="highlight"><span>Sum:</span> {{ commande.sum }}</li>
+      </ul>
+      <button class="edit-btn" data-id="{{ commande.id }}" data-type="commande" data-boncommande-id="{{ boncommande.id }}">Edit</button>
+    </div>
 
-        <tr>
-
-
-
-         <td>
-            <ul class="details-list">
-                <li>identifier : {{ fournisseur.identificateur }}</li>
-                <li>name : {{ fournisseur.name }}</li>
-                <li>address : {{ fournisseur.address }}</li>
-                <li>subject : {{ fournisseur.sujet }}</li>
-                <li>consultation : {{ fournisseur.consultation }}</li>
-            </ul>
-         </td>
-
-         <td>
-            <ul class="details-list">
-                <li>name : {{ client.name }}</li>
-                <li>address : {{ client.address }}</li>
-                <li>mail : {{ client.mail }}</li>
-                <li>phone : {{ client.phone }}</li>
-                <li>fax : {{ client.fax }}</li>
-                <li>tax_id : {{ client.tax_id }}</li>
-            </ul>
-         </td>
-
-        </tr>
-
-        <tr>
-            <th>Order</th>
-            <th>Product</th>
-        </tr>
-
-        <tr>
-
-        <td>
-            <ul class="details-list">
-                <li>quantity : {{ commande.quantity }}</li>
-                <li>unitye : {{ commande.unity }}</li>
-                <li>individual price : {{ commande.price_indiv }}</li>
-                <li>total price: {{ commande.price_total }}</li>
-                <li>sum : {{ commande.sum }}</li>
-            </ul>
-        </td>
-
-
-        <td>
-            <ul class="details-list">
-                <li>name : {{ produit.name }}</li>
-                <li>characteristic : {{ produit.characteristic }}</li>
-            </ul>
-        </td>
-        </tr>
-    </table>
+    <div class="card">
+      <div class="section-title">Product</div>
+      <ul class="details-list">
+        <li><span>Name:</span> {{ produit.name }}</li>
+        <li><span>Characteristic:</span> {{ produit.characteristic }}</li>
+      </ul>
+      <button class="edit-btn" data-id="{{ produit.id }}" data-type="produit" data-boncommande-id="{{ boncommande.id }}">Edit</button>
+   
+    </div>
   </div>
-  
-
-
-
-
-
-
   {% endblock %}
-  
-</body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+
+
+<script>
+    $(document).ready(function(){
+        $('.edit-btn').click(function(){
+            var id = $(this).data('id');
+            var type = $(this).data('type');
+            var boncommandeId = $(this).data('boncommande-id');
+
+            // Redirect to the edit page with the ID, type, and boncommandeId
+            window.location.href = '/edit/' + type + '/' + id + '?boncommande_id=' + boncommandeId; 
+        });
+           
+  
+        
+    });
+  </script>
+
+
+
+
+</body>
 </html>
-
-
-
-

@@ -19,6 +19,7 @@ urlpatterns = [
     path('userinterface', views.userinterface, name='userinterface'),
     path('activate_user', views.activate_user, name='activate_user'),
     path('deleteuser', views.deleteuser, name='deleteuser'),
+    path('edit/<str:item_type>/<int:item_id>/', views.edit_item, name='edit_item'),
     
 
 ]

@@ -1,0 +1,117 @@
+{% extends "commandedetails.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+
+
+<title>FSG</title>
+
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo"><a href="{% url 'home' %}"><img src="static/images/logo.png"/></a></div>
+
+    <input type="checkbox" id="check">
+    <label for="check" class="icons">
+        <i class="bx bx-menu" id="menu-icon"></i>
+        <i class="bx bx-x" id="close-icon"></i>
+    </label>
+
+
+    <div class="menubar">
+         <ul class="mbar">
+             <li><a href="File">New FIle</a></li>
+             
+             <li class="active">
+                 <a href="#" class="data-mn">Data Managements</a>
+
+                  
+                    <ul class="nested-menu">
+                        <div class="nm">
+                           <li></li>
+                           <li><a href="{% url 'bon_commande' %}">Purchase order</a></li>
+                           <li><a href="{% url 'gestionf' %}">Supplier</a></li>
+                        </div>
+                    </ul>
+                
+              </li>
+              {% if request.user.is_superuser %} 
+              <li class="nd1" ><a href="{% url 'userinterface' %}"  >Users</a> </li>
+              {% endif %}
+              <li class="nd2f"><a href="#" ><i class="fas fa-user"></i></a>
+                <ul class="nested-menu2">
+                  <div class="nm2">
+                     <li></li>
+                     <li><a href="#">settings</a></li>
+                     <li><a href="{% url 'logout_view' %}">logout</a></li>
+                  </div>
+              </ul>
+              </li>
+         </ul>
+     </div>
+  </div>
+
+
+
+
+
+  <div class="container">
+
+
+   <h1>Edit {{ item_type }}</h1>
+   <form method="post">
+    {% csrf_token %}
+    {% if item_type == 'client' %}
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="{{ item.name }}"><br>
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" value="{{ item.address }}"><br>
+      <label for="mail">Email:</label>
+      <input type="email" id="mail" name="mail" value="{{ item.mail }}"><br>
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" name="phone" value="{{ item.phone }}"><br>
+      <label for="fax">Fax:</label>
+      <input type="text" id="fax" name="fax" value="{{ item.fax }}"><br>
+      <label for="tax_id">Tax ID:</label>
+      <input type="text" id="tax_id" name="tax_id" value="{{ item.tax_id }}"><br>
+    {% elif item_type == 'commande' %}
+      <label for="quantity">Quantity:</label>
+      <input type="text" id="quantity" name="quantity" value="{{ item.quantity }}"><br>
+      <label for="unity">Unit:</label>
+      <input type="text" id="unity" name="unity" value="{{ item.unity }}"><br>
+      <label for="price_indiv">Individual Price:</label>
+      <input type="text" id="price_indiv" name="price_indiv" value="{{ item.price_indiv }}"><br>
+      <label for="price_total">Total Price:</label>
+      <input type="text" id="price_total" name="price_total" value="{{ item.price_total }}"><br>
+      <label for="sum">Sum:</label>
+      <input type="text" id="sum" name="sum" value="{{ item.sum }}"><br>
+    {% elif item_type == 'produit' %}
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="{{ item.name }}"><br>
+      <label for="characteristic">Characteristic:</label>
+      <input type="text" id="characteristic" name="characteristic" value="{{ item.characteristic }}"><br>
+    {% endif %}
+    <button type="submit">Save</button>
+   </form>
+  </div>
+
+
+
+
+
+  {% endblock %}
+</body>
+</html>
+

@@ -268,7 +268,6 @@ def inscription(request):
         password = request.POST.get('password')
         lastName = request.POST.get('lastName')
         statut = request.POST.get('statut')
-        print(statut) 
 
 
         # Check for existing username
@@ -321,14 +320,26 @@ def bon_commande(request):
 def commandedetails(request):
     if request.method == 'GET':
         try:
+            
             boncommande_id = request.GET.get('id')
-            boncommande = get_object_or_404(BonCommande, pk=boncommande_id)
+            boncommande_id1 = request.GET.get('boncommande_id')
 
-            # Extract data from the BonCommande object for the template
-            fournisseur = boncommande.fournisseur
-            client = boncommande.id_client
-            commande = boncommande.id_commande
-            produit = commande.id_produit
+            
+            if boncommande_id:
+
+              boncommande = get_object_or_404(BonCommande, pk=boncommande_id)
+              # Extract data from the BonCommande object for the template
+              fournisseur = boncommande.fournisseur
+              client = boncommande.id_client
+              commande = boncommande.id_commande
+              produit = commande.id_produit
+
+            if boncommande_id1:
+               boncommande = get_object_or_404(BonCommande, id=boncommande_id1)
+               fournisseur = boncommande.fournisseur
+               client = boncommande.id_client
+               commande = boncommande.id_commande
+               produit = commande.id_produit
 
             context = {
                 'boncommande': boncommande,
@@ -500,3 +511,56 @@ def deleteuser(request):
 def logout_view(request):
     logout(request)
     return redirect('user', permanent=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+def edit_item(request, item_type, item_id):
+    if item_type == 'client':
+        item = get_object_or_404(Client, id=item_id)
+    elif item_type == 'commande':
+        item = get_object_or_404(Commande, id=item_id)
+    elif item_type == 'produit':
+        item = get_object_or_404(Produit, id=item_id)
+    else:
+        return redirect('home')
+
+    if request.method == 'POST':
+        # Process the form data and update the item
+        if item_type == 'client':
+            item.name = request.POST.get('name')
+            item.address = request.POST.get('address')
+            item.mail = request.POST.get('mail')
+            item.phone = request.POST.get('phone')
+            item.fax = request.POST.get('fax')
+            item.tax_id = request.POST.get('tax_id')
+        elif item_type == 'commande':
+            item.quantity = request.POST.get('quantity')
+            item.unity = request.POST.get('unity')
+            item.price_indiv = request.POST.get('price_indiv')
+            item.price_total = request.POST.get('price_total')
+            item.sum = request.POST.get('sum')
+        elif item_type == 'produit':
+            item.name = request.POST.get('name')
+            item.characteristic = request.POST.get('characteristic')
+
+        item.save()
+        boncommande_id = request.GET.get('boncommande_id')  # Get from URL
+        return redirect(reverse('commandedetails') + f'?boncommande_id={boncommande_id}') 
+
+    context = {
+        'item': item,
+        'item_type': item_type,
+        'boncommande_id': request.GET.get('boncommande_id'),
+    }
+    return render(request, 'edit_item.html', context)
+

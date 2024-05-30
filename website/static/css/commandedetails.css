@@ -249,54 +249,96 @@ body {
   }
   
 
-
-
-
-.table-wrapper {
-    overflow-x: auto;
-    border-radius: 15px;
-    background: #ffffff;
+  .content-wrapper {
     padding: 20px;
-    margin: 150px 0;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-left: 50px;
-    margin-right: 50px;
-}
+    margin: 150px 50px;
+  }
 
-.table-wrapper h2{
+  .card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .card h2 {
     text-align: center;
-    
-}
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
 
-.objects-list {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed; /*  Forces the table to distribute available space evenly */
-}
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2980b9;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #2980b9;
+    display: inline-block;
+    padding-bottom: 5px;
+  }
 
-.objects-list th,
-.objects-list td {
-  padding: 10px;
-  border: 0px solid #ddd;
-  word-break: break-all; /* Allow text to wrap within cells */
-}
+  .details-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-.objects-list th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
+  .details-list li {
+    flex: 1 1 50%;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-size: 16px;
+  }
 
-.details-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+  .details-list li span {
+    font-weight: bold;
+    color: #2980b9;
+  }
 
-.details-list li {
-  margin-bottom: 5px;
-}
+  .details-list .highlight {
+    color: #e74c3c;
+  }
 
-.details-list strong {
-  font-weight: bold;
-}
+  .edit-btn{
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    padding: 0.5em 0.5em 0;
+    font-weight: bold;
+    font-size:medium;
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+    width: 20%;
+    height: 50px;
+    margin-left: 35%;
+    margin-top: 5%;
+    background-color: #000000;
+    color: #ffffff;
+  }
+  
+  .edit-btn:hover {
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    padding: 0.5em 0.5em 0;
+    font-size:medium;
+
+    font-weight: bold;
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    width: 20%;
+    height: 50px;
+    margin-left: 35%;
+    margin-top: 5%;
+  }
