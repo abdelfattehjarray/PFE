@@ -51,7 +51,7 @@
                 <ul class="nested-menu2">
                   <div class="nm2">
                      <li></li>
-                     <li><a href="#">Profile</a></li>
+                     <li><a href="{% url 'profile_settings' %}">Profile</a></li>
                      <li><a href="{% url 'logout_view' %}">logout</a></li>
                   </div>
               </ul>
@@ -87,7 +87,9 @@
         <li><span>Fax:</span> {{ client.fax }}</li>
         <li><span>Tax ID:</span> {{ client.tax_id }}</li>
       </ul>
+      {% if request.user.is_superuser or request.user.is_staff %}
       <button class="edit-btn" data-id="{{ client.id }}" data-type="client" data-boncommande-id="{{ boncommande.id }}">Edit</button>
+      {% endif %}
     </div>
 
     <div class="card">
@@ -99,7 +101,9 @@
         <li><span>Total Price:</span> {{ commande.price_total }}</li>
         <li class="highlight"><span>Sum:</span> {{ commande.sum }}</li>
       </ul>
+      {% if request.user.is_superuser or request.user.is_staff %}
       <button class="edit-btn" data-id="{{ commande.id }}" data-type="commande" data-boncommande-id="{{ boncommande.id }}">Edit</button>
+      {% endif %}
     </div>
 
     <div class="card">
@@ -108,8 +112,10 @@
         <li><span>Name:</span> {{ produit.name }}</li>
         <li><span>Characteristic:</span> {{ produit.characteristic }}</li>
       </ul>
+      {% if request.user.is_superuser or request.user.is_staff %}
       <button class="edit-btn" data-id="{{ produit.id }}" data-type="produit" data-boncommande-id="{{ boncommande.id }}">Edit</button>
    
+      {% endif %}
     </div>
   </div>
   {% endblock %}

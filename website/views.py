@@ -6,22 +6,27 @@ from django.core.mail import send_mail
 from pfe.settings import EMAIL_HOST_USER
 from .models import Client, Fournisseur, BonCommande,Produit, Commande,userstatus
 from .extractcode import pdf, tablepdf
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
-from django.contrib.auth.models import User  # Import the User model
+from django.views.decorators.cache import cache_control
+from django.contrib.auth.models import User  
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import user_passes_test
-from django.views.decorators.cache import cache_control
+from django.contrib.auth.decorators import login_required
+from .forms import UserForm
+from django.contrib.auth import update_session_auth_hash
+from .forms import CustomUserChangeForm, CustomPasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
+
+
+
 sys.stdout.reconfigure(encoding='utf-8')
 
 
 
-
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required
 def home(request):
 
     return render(request, 'home.html', {} )
@@ -127,7 +132,8 @@ def save_data(request):
                 return JsonResponse({'error': 'An unexpected error occurred: ' + str(e)}, status=500)
         return redirect("user")
 
-
+@login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @csrf_exempt
 def File(request):
     if request.method == 'POST':
@@ -312,11 +318,14 @@ def inscription(request):
 
 
 #boncommandes , commandes
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required
 def bon_commande(request):
     boncommande = BonCommande.objects.all()
     return render(request, 'bon_commande.html',{'boncommande': boncommande} )
 
-
+@login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def commandedetails(request):
     if request.method == 'GET':
         try:
@@ -382,7 +391,8 @@ def deletecommande(request):
 
 
     #founisseurs 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required
 def gestionf(request):
     f_ournisseur = Fournisseur.objects.all()
   
@@ -397,7 +407,9 @@ def deletef(request):
 
 
 
-  #boncommande de fournisseur 
+  #boncommande de fournisseur
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required
 def Fcommande(request):
     if request.method == 'GET':
         f_id = request.GET.get('id')
@@ -417,6 +429,7 @@ def Fcommande(request):
         return render(request, 'Fcommande.html', {})
 
 
+@login_required
 def deletecf(request):
     if request.method == 'POST':
         id = request.POST.get('id')
@@ -444,7 +457,8 @@ def deletecf(request):
 
 
 #userinterface 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required
 def userinterface(request):
     activeusers = User.objects.filter(is_active=True)
     inactive_users=User.objects.filter(is_active=False)
@@ -460,7 +474,10 @@ def userinterface(request):
 
 
     return render(request, 'userinterface.html', {'activeusers': activeusers, 'inactive_users':inactive_users})
-   
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required
 def activate_user(request):
     if request.method == 'POST':
         user_id = request.POST.get('id')
@@ -520,10 +537,8 @@ def logout_view(request):
 
 
 
-
-
-
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required
 def edit_item(request, item_type, item_id):
     if item_type == 'client':
         item = get_object_or_404(Client, id=item_id)
@@ -564,3 +579,44 @@ def edit_item(request, item_type, item_id):
     }
     return render(request, 'edit_item.html', context)
 
+
+
+
+
+
+
+
+
+
+
+@login_required
+def profile_settings(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        password_form = PasswordChangeForm(request.user, request.POST)
+
+        if 'update_profile' in request.POST:
+            if user_form.is_valid():
+                user_form.save()
+                messages.success(request, 'Your profile was successfully updated!')
+                return redirect('profile_settings')
+            else:
+                messages.error(request, 'Please correct the error below.')
+
+        elif 'change_password' in request.POST:
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)  # Important!
+                messages.success(request, 'Your password was successfully updated!')
+                return redirect('profile_settings')
+            else:
+                messages.error(request, 'Please correct the error below.')
+
+    else:
+        user_form = UserForm(instance=request.user)
+        password_form = PasswordChangeForm(request.user)
+
+    return render(request, 'profile_settings.html', {
+        'user_form': user_form,
+        'password_form': password_form
+    })

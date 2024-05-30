@@ -1,0 +1,334 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* General Reset and Body Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+  background: #000000;
+  background-image: url('../images/02.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+  padding-left: 7rem;
+  padding-right: 7rem;
+  position: absolute;
+  top: 0;
+  height: 7rem;
+  width: 100%;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+}
+
+.navbar li {
+  padding: 0 1rem;
+  position: relative;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.navbar a:hover {
+  color: #00ffff;
+}
+
+.navbar li .nested-menu,
+.navbar li .nested-menu2 {
+  display: none;
+}
+
+.nested-menu,
+.nested-menu2 {
+  display: block;
+  position: absolute;
+  min-width: 190px;
+  z-index: 1;
+  padding-top: 20px;
+}
+
+.nested-menu {
+  left: 0%;
+}
+
+.nested-menu2 {
+  left: -70px;
+}
+
+.navbar li:hover .nested-menu,
+.navbar li:hover .nested-menu2 {
+  display: block;
+}
+
+.nested-menu a,
+.nested-menu2 a {
+  color: #fff;
+  padding: 0.2rem 1rem;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+}
+
+.nested-menu a:hover,
+.nested-menu2 a:hover {
+  color: #00ffff;
+}
+
+.logo img {
+  padding-left: 5%;
+  height: 80%;
+}
+
+.menubar {
+  padding-top: 10px;
+  right: 5%;
+}
+
+.navbar li.active:after {
+  content: '';
+  display: inline-block;
+  color: white;
+  margin-bottom: 3px;
+  border: solid;
+  border-width: 0 1px 1px 0;
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  margin-left: 2px;
+}
+
+#check {
+  display: none;
+}
+
+.icons {
+  position: absolute;
+  font-size: 2.8rem;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+  .body .navbar {
+    padding: 1.3rem 5%;
+  }
+
+  .icons {
+    display: none;
+    position: absolute;
+    font-size: 2.8rem;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  #check:checked ~ .icons #menu-icon {
+    display: none;
+  }
+
+  .icons {
+    z-index: 999;
+    right: 5%;
+    position: absolute;
+    font-size: 2.8rem;
+    color: white;
+    cursor: pointer;
+    display: block;
+  }
+
+  .icons #close-icon {
+    display: none;
+  }
+
+  #check:checked ~ .icons #close-icon {
+    display: block;
+  }
+
+  .menubar {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150%;
+    height: 50rem;
+    display: none;
+    overflow: hidden;
+    transition: 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+  }
+
+  #check:checked ~ .menubar {
+    display: block;
+  }
+
+  .navbar li .nested-menu {
+    display: none;
+    top: -5;
+    left: -30;
+}
+
+.navbar li .nested-menu2{
+  display: none;
+  top: 10;
+  left: -115;
+}
+  .navbar .menubar ul {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin-top: 20%;
+    margin-left: 30;
+  }
+
+  .navbar .menubar li {
+    padding: 1rem 0;
+  }
+
+  .menubar a {
+    font-size: large;
+  }
+
+  .nested-menu a {
+    color: #fff;
+    display: block;
+    margin: -0.8rem 0;
+    font-size: medium;
+  }
+
+  .navbar li:hover ~ .nd1 {
+    margin-top: 80px; 
+  }
+    
+    
+  form {
+    width: 90%;
+    padding: 20px;
+}
+
+/* Background Shape (Optional) */
+form::before {
+content: '';
+position: absolute;
+top: -20px;
+left: -20px;
+width: 100%;
+height: 100%;
+background-color: #f4f4f4;
+z-index: -1; /* Place behind the form */
+transform: rotate(4deg); /* Slight rotation for cool effect */
+border-radius: 15px;
+}
+
+/* Add a subtle gradient to the form container */
+form {
+background: linear-gradient(to bottom right, #fff, #f5f5f5);
+}
+    
+
+  
+  }
+
+  
+h1, h2 {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Form Container */
+form {
+  max-width: 500px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative; /* For the background shape */
+  width: 900px;
+  max-width: 900px;
+  margin-top: 13%;
+}
+
+/* Form Elements */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #f8f8f8;
+  transition: box-shadow 0.2s ease; /* Subtle shadow effect */
+  font-family: 'Poppins', sans-serif;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #2196F3; /* Blue focus color */
+  box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+}
+
+/* Button Styling */
+button[type="submit"] {
+  background-color: #2196F3; /* Blue color */
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Poppins', sans-serif;
+}
+
+button[type="submit"]:hover {
+  background-color: #1976D2; /* Darker blue on hover */
+}
+
+/* Section Styling */
+.section {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee; /* Subtle separation */
+}
+
+/* Error Messages */
+.errorlist {
+  color: #f44336; /* Red error color */
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+

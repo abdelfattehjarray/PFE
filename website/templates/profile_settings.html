@@ -1,0 +1,95 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+ <link rel="stylesheet" href="{% static 'css/profile_settings.css' %}">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+ <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+
+
+ <title>FSG</title>
+
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo"><a href="{% url 'home' %}"><img src="{% static '../static/images/logo.png' %}"/></a></div>
+
+    <input type="checkbox" id="check">
+    <label for="check" class="icons">
+        <i class="bx bx-menu" id="menu-icon"></i>
+        <i class="bx bx-x" id="close-icon"></i>
+    </label>
+
+
+    <div class="menubar">
+         <ul class="mbar">
+             <li><a href="File">New FIle</a></li>
+             
+             <li class="active">
+                 <a href="#">Data Managements</a>
+
+                  
+                    <ul class="nested-menu">
+                        <div class="nm">
+                           <li></li>
+                           <li><a href="{% url 'bon_commande' %}">Purchase order</a></li>
+                           <li><a href="{% url 'gestionf' %}">Supplier</a></li>
+                        </div>
+                    </ul>
+                
+              </li>
+              {% if request.user.is_superuser %} 
+              <li class="nd1"><a href="{% url 'userinterface' %}">Users</a> </li>
+              {% endif %}
+              <li><a href="#"><i class="fas fa-user"></i></a>
+                <ul class="nested-menu2">
+                  <div class="nm2">
+                     <li></li>
+                     <li><a href="#">Profile</a></li>
+                     <li><a href="{% url 'logout_view' %}">logout</a></li>
+                  </div>
+              </ul>
+              </li>
+         </ul>
+    </div>
+  </div>
+
+
+  <div class="form-container">
+   <form method="post">
+    {% csrf_token %}
+    <h2>Update Profile Information</h2>
+    {{ user_form.as_p }}
+    <button type="submit" name="update_profile">Save Profile</button>
+   </form>
+
+   <form method="post" style="margin-top: 20px;">
+    {% csrf_token %}
+    <h2>Change Password</h2>
+    {{ password_form.as_p }}
+    <button type="submit" name="change_password">Change Password</button>
+   </form>
+  </div>
+
+
+  
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% endblock %}
+</html>
+
+
+
+ 
+
