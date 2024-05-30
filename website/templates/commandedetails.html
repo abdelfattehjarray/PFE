@@ -51,7 +51,7 @@
                 <ul class="nested-menu2">
                   <div class="nm2">
                      <li></li>
-                     <li><a href="#">settings</a></li>
+                     <li><a href="#">Profile</a></li>
                      <li><a href="{% url 'logout_view' %}">logout</a></li>
                   </div>
               </ul>
@@ -94,7 +94,7 @@
       <div class="section-title">Order</div>
       <ul class="details-list">
         <li><span>Quantity:</span> {{ commande.quantity }}</li>
-        <li><span>Unit:</span> {{ commande.unity }}</li>
+        <li><span>Unity:</span> {{ commande.unity }}</li>
         <li><span>Individual Price:</span> {{ commande.price_indiv }}</li>
         <li><span>Total Price:</span> {{ commande.price_total }}</li>
         <li class="highlight"><span>Sum:</span> {{ commande.sum }}</li>

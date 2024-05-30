@@ -47,11 +47,11 @@
               {% if request.user.is_superuser %} 
               <li class="nd1" ><a href="{% url 'userinterface' %}"  >Users</a> </li>
               {% endif %}
-              <li class="nd2"><a href="#" ><i class="fas fa-user"></i></a>
+              <li class="nd2f"><a href="#" ><i class="fas fa-user"></i></a>
                 <ul class="nested-menu2">
                   <div class="nm2">
                      <li></li>
-                     <li><a href="#">settings</a></li>
+                     <li><a href="#">Profile</a></li>
                      <li><a href="{% url 'logout_view' %}">logout</a></li>
                   </div>
               </ul>

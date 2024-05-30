@@ -235,7 +235,7 @@ body {
     font-size: large;
   }
   .nested-menu2{
-    left: -110;
+    margin-left: -110;
   }
 
   .nested-menu a,
