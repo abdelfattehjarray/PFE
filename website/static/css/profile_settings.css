@@ -251,10 +251,16 @@ background: linear-gradient(to bottom right, #fff, #f5f5f5);
   
   }
 
+.form-container{
+  margin-top: 5%;
+}
+
   
 h1, h2 {
   color: #333;
   font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 /* Form Container */
@@ -262,36 +268,54 @@ form {
   max-width: 500px;
   padding: 30px;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative; /* For the background shape */
-  width: 900px;
+  position: relative; 
+  width: 700px;
   max-width: 900px;
   margin-top: 13%;
 }
 
 /* Form Elements */
 label {
-  display: block;
-  margin-bottom: 5px;
+  
+  margin-bottom: 10px;
   font-weight: 500;
+  width: 50%;
   color: #555;
+  margin-left: 4rem;
+  margin-top: 10px;
+}
+p{
+  margin: 20px 0px;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"],
 textarea {
-  width: 100%;
+  width: 80%;
   padding: 12px 15px;
   margin-bottom: 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #444444;
   border-radius: 5px;
   box-sizing: border-box;
-  background-color: #f8f8f8;
+  background-color: #ffffff;
   transition: box-shadow 0.2s ease; /* Subtle shadow effect */
   font-family: 'Poppins', sans-serif;
+  margin-left: 4rem;
+  
+
 }
+
+
+
+
+.helptext{
+  color: green;
+  font-size: smaller;
+  margin-bottom: 30px;
+  margin-left: 4rem;}
 
 input[type="text"]:focus,
 input[type="email"]:focus,
@@ -304,18 +328,37 @@ textarea:focus {
 
 /* Button Styling */
 button[type="submit"] {
-  background-color: #2196F3; /* Blue color */
+  background-color: #000000; /* Blue color */
   color: white;
   padding: 15px 25px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
   font-family: 'Poppins', sans-serif;
+  margin-top: 50px;
+  margin-left: 16rem;
 }
 
 button[type="submit"]:hover {
-  background-color: #1976D2; /* Darker blue on hover */
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+  border: 2px solid #1A1A1A;
+  background-color: white;
+  color: black;
+}
+button[name="change_password"] {
+  
+  margin-left: 15rem;
+}
+
+
+
+form ul{
+  color: green;
+  font-size: smaller;
+  margin-bottom: 30px;
+  margin-left: 5rem;
 }
 
 /* Section Styling */
