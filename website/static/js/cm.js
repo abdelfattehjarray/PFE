@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const form = button.closest('form'); // Get the parent form
 
             // Confirm deletion with a popup
-            if (confirm('Are you sure you want to delete this item?')) {
+            if (confirm('Are you sure you want to delete this order?')) {
                 form.submit(); // Submit the form if confirmed
             }
         });

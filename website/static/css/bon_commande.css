@@ -353,3 +353,11 @@ body {
 .btn-danger:active {
   opacity: .5;
 }
+
+.emty{
+  
+  color: white;
+  top: 50%;
+  font-size: 20px;
+  text-align: center;
+}

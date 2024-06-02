@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const form = button.closest('form'); 
 
             
-            if (confirm('Are you sure you want to delete this item?')) {
+            if (confirm('Are you sure you want to delete this order?')) {
                 form.submit(); 
             }
         });

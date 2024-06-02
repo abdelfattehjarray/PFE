@@ -16,8 +16,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm
 from django.contrib.auth import update_session_auth_hash
-from .forms import CustomUserChangeForm, CustomPasswordChangeForm
 from django.contrib.auth.forms import PasswordChangeForm
+
 
 
 
@@ -370,6 +370,8 @@ def commandedetails(request):
 def deletecommande(request):
     id=request.POST.get('id')
     BC=BonCommande.objects.get(id=id)
+    c=Commande.objects.get(id=BC.id_commande.id)
+    c.delete()
     
     BC.delete()
     return redirect('bon_commande')

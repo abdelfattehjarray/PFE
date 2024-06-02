@@ -61,7 +61,7 @@
   </div>
 
 
-  
+ {% if boncommande %} 
  <div class="table-wrapper">
   <div class="tabletitle">
     <h2 >Purchase orders</h2></div>
@@ -105,6 +105,11 @@
 
 
  </div> 
+ {% else %} 
+ <div class="emty">
+    <p>no purchase order exists.</p>
+ </div>
+ {% endif %}
   
 
 

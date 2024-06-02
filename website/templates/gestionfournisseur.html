@@ -61,7 +61,7 @@
   </div>
 
 
-  
+{% if f_ournisseur %} 
  <div class="table-wrapper">
     <div class="tabletitle">
         <h2 >Suppliers</h2></div>
@@ -108,7 +108,11 @@
 
  </div> 
   
-
+ {% else %} 
+ <div class="emty">
+    <p>No supplier exists.</p>
+ </div>
+ {% endif %}
 
  <script src="{% static 'js/fc.js' %}"></script>
 

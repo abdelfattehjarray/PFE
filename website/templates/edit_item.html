@@ -101,7 +101,7 @@
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" value="{{ item.name }}"><br>
       <label for="characteristic">Characteristic:</label>
-      <input type="text" id="characteristic" name="characteristic" value="{{ item.characteristic }}"><br>
+      <input type="text" id="characteristic" name="characteristic" value="{{ item.characteristic|linebreaksbr  }}"><br>
     {% endif %}
     <button type="submit">Save</button>
    </form>

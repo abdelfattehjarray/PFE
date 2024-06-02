@@ -110,7 +110,7 @@
       <div class="section-title">Product</div>
       <ul class="details-list">
         <li><span>Name:</span> {{ produit.name }}</li>
-        <li><span>Characteristic:</span> {{ produit.characteristic }}</li>
+        <li><span>Characteristic:</span> {{ produit.characteristic|linebreaksbr }}</li>
       </ul>
       {% if request.user.is_superuser or request.user.is_staff %}
       <button class="edit-btn" data-id="{{ produit.id }}" data-type="produit" data-boncommande-id="{{ boncommande.id }}">Edit</button>

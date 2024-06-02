@@ -18,7 +18,7 @@ class Fournisseur(models.Model):
 
 class Produit(models.Model):
     name = models.CharField(max_length=20)
-    characteristic = models.TextField(max_length=5000)
+    characteristic = models.TextField(max_length=5000, null=True)
 
 class BonCommande(models.Model):
     numero=models.CharField( max_length=10, null=True)
