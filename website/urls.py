@@ -21,6 +21,7 @@ urlpatterns = [
     path('deleteuser', views.deleteuser, name='deleteuser'),
     path('edit/<str:item_type>/<int:item_id>/', views.edit_item, name='edit_item'),
     path('profile/', views.profile_settings, name='profile_settings'),
+    path('inactivate_user/', views.inactivate_user, name='inactivate_user'),
 
 
 ]

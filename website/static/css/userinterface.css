@@ -402,6 +402,26 @@ body {
     color: #fff;
     cursor: pointer;
   }
+.inactive-btn {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 0.5em 0.5em 0;
+    font-weight: bold;
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+  }
+  
+  .inactive-btn:hover {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 0.5em 0.5em 0;
+    font-weight: bold;
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+  }
 
   /* Basic Styling */
 select[name="permission"] {

@@ -509,6 +509,29 @@ def activate_user(request):
             return render(request, 'userinterface.html', {'error_message': 'User not found'})
     else:
         return render(request, 'userinterface.html', {'error_message': 'Invalid request'})
+def inactivate_user(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('id')
+
+        try:
+            user = User.objects.get(pk=user_id)
+            user.is_active = False
+
+            
+
+            user.save()
+
+
+            subject = 'Your account is Disabled!'
+            message = f"Hello {user.username},\n\nYour account is Disabled. Check with administration for more details.\n\nBest regards,\nThe FSG Team"
+            from_email = EMAIL_HOST_USER
+            recipient_list = [user.email]
+            send_mail(subject, message, from_email, recipient_list)
+            return redirect('userinterface')  # Redirect to the userinterface view
+        except User.DoesNotExist:
+            return render(request, 'userinterface.html', {'error_message': 'User not found'})
+    else:
+        return render(request, 'userinterface.html', {'error_message': 'Invalid request'})
 
 def deleteuser(request):
     if request.method == 'POST':
@@ -548,6 +571,8 @@ def edit_item(request, item_type, item_id):
         item = get_object_or_404(Commande, id=item_id)
     elif item_type == 'produit':
         item = get_object_or_404(Produit, id=item_id)
+    elif item_type == 'fournisseur':
+        item = get_object_or_404(Fournisseur, id=item_id)
     else:
         return redirect('home')
 
@@ -560,19 +585,33 @@ def edit_item(request, item_type, item_id):
             item.phone = request.POST.get('phone')
             item.fax = request.POST.get('fax')
             item.tax_id = request.POST.get('tax_id')
+            
         elif item_type == 'commande':
             item.quantity = request.POST.get('quantity')
             item.unity = request.POST.get('unity')
             item.price_indiv = request.POST.get('price_indiv')
             item.price_total = request.POST.get('price_total')
             item.sum = request.POST.get('sum')
+            
         elif item_type == 'produit':
             item.name = request.POST.get('name')
             item.characteristic = request.POST.get('characteristic')
-
+            
+        elif item_type == 'fournisseur':
+            item.name = request.POST.get('name')
+            item.address = request.POST.get('address')
+            item.sujet = request.POST.get('sujet')
+            item.consultation = request.POST.get('consultation')
+            item.save()
+            return redirect(reverse('gestionf'))
+        else:
+            return redirect('home')
         item.save()
-        boncommande_id = request.GET.get('boncommande_id')  # Get from URL
-        return redirect(reverse('commandedetails') + f'?boncommande_id={boncommande_id}') 
+        boncommande_id = request.GET.get('boncommande_id')  
+        return redirect(reverse('commandedetails') + f'?boncommande_id={boncommande_id}')
+
+
+         
 
     context = {
         'item': item,

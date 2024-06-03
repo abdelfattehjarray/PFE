@@ -16,7 +16,7 @@
 
 
 
-<title>FSG</title>
+<title>Edit item</title>
 
 </head>
 <body>
@@ -101,7 +101,16 @@
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" value="{{ item.name }}"><br>
       <label for="characteristic">Characteristic:</label>
-      <input type="text" id="characteristic" name="characteristic" value="{{ item.characteristic|linebreaksbr  }}"><br>
+      <input type="text" id="characteristic" name="characteristic" value="{{ item.characteristic }}"><br>
+    {% elif item_type == 'fournisseur' %}
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="{{ item.name }}"><br>
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" value="{{ item.address }}"><br>
+      <label for="sujet">Subject:</label>
+      <input type="text" id="sujet" name="sujet" value="{{ item.sujet }}"><br>
+      <label for="consultation">Consultation:</label>
+      <input type="text" id="consultation" name="consultation" value="{{ item.consultation }}"><br>
     {% endif %}
     <button type="submit">Save</button>
    </form>

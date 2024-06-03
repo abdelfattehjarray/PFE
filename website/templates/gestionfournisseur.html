@@ -13,7 +13,7 @@
 
 
 
-<title>FSG</title>
+<title>Suppliers</title>
 
 </head>
 <body>
@@ -75,7 +75,8 @@
                 <th scope="col">consultation</th>
                 <th scope="col">details</th>
                 {% if request.user.is_superuser or request.user.is_staff %}
-                <th scope="col">Action</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
                 {% endif %}
               </tr>
         </thead>
@@ -89,13 +90,19 @@
                     <td>{{ item.sujet }}</td>
                     <td>{{ item.consultation }}</td>
                     <td><button class="details-button" data-item-id="{{ item.id }}">Details</button></td> 
+                    
+                    </td> 
+
                     {% if request.user.is_superuser or request.user.is_staff %}
+                    <td><button class="edit-btn" data-id="{{ item.id }}" data-type="fournisseur">Edit</button>
+
                     <td>
                       <form method="POST" action="{% url 'deletef'%}">{% csrf_token %}
                         <input type="hidden" name="id" value={{item.id}}>
                         <input type="submit"  value="Delete" class="btn-danger">
                       </form>
                   </td>
+                  
                   {% endif %}
                 </tr>
                 {% endfor %}
@@ -115,6 +122,8 @@
  {% endif %}
 
  <script src="{% static 'js/fc.js' %}"></script>
+ 
+
 
 
 

@@ -13,7 +13,7 @@
 
 
 
-<title>FSG</title>
+<title>user Management</title>
 
 </head>
 <body>
@@ -114,6 +114,7 @@
                       </td>
                     </form>
                         
+                        
                     </tr>
                     {% endfor %}
             </tbody>
@@ -131,7 +132,8 @@
                   <th scope="col">lastname</th>
                   <th scope="col">Email</th>
                   <th scope="col">Permissions</th> 
-                  <th scope="col">Action</th>
+                  <th scope="col">Delete</th>
+                  <th scope="col">Disable</th>
                 </tr>
             </thead>
               
@@ -156,6 +158,14 @@
                           <input type="submit"  value="Delete" class="btn-danger">
                         </form>
                     </td>
+                    <form method="POST" action="{% url 'inactivate_user' %}">{% csrf_token %}
+                      <td>
+                        
+                            <input type="hidden" name="id" value={{item.id}}>
+                            <button type="submit" class="inactive-btn" data-user-id="{{ item.id }}">Disactive</button>
+
+                      </td>
+                    </form>
                   </tr>
                   {% endfor %}
             </tbody>

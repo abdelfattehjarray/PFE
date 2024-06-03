@@ -269,6 +269,7 @@ body {
   }
 
   .card h2 {
+    padding-top: 20;
     text-align: center;
     color: #2c3e50;
     font-size: 24px;
@@ -311,7 +312,7 @@ body {
 
   .edit-btn{
     border: 1px solid #aaa;
-    border-radius: 6px;
+    border-radius: 15px;
     padding: 0.5em 0.5em 0;
     font-weight: bold;
     font-size:medium;
@@ -326,11 +327,9 @@ body {
   }
   
   .edit-btn:hover {
-    border: 1px solid #aaa;
-    border-radius: 6px;
+    border-radius: 15px;
     padding: 0.5em 0.5em 0;
     font-size:medium;
-
     font-weight: bold;
     margin: -0.5em -0.5em 0;
     padding: 0.5em;
@@ -341,4 +340,7 @@ body {
     height: 50px;
     margin-left: 40%;
     margin-top: 5%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+    border: 2px solid #1A1A1A;
   }
