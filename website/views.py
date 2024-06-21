@@ -13,7 +13,7 @@ from django.views.decorators.cache import cache_control
 from django.contrib.auth.models import User  
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import UserForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -248,6 +248,8 @@ def File(request):
 
 
 #login and sign up
+def loginerror(request):
+        return render(request, 'user.html', {})
 
 def login_view(request):
     if request.method == 'POST':
@@ -452,7 +454,11 @@ def deletecf(request):
 
 
 
+def is_superuser(user):
+    return user.is_superuser
 
+def is_staff(user):
+    return user.is_staff
 
 
 
@@ -461,6 +467,7 @@ def deletecf(request):
 #userinterface 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required
+@user_passes_test(is_superuser)
 def userinterface(request):
     activeusers = User.objects.filter(is_active=True)
     inactive_users=User.objects.filter(is_active=False)
@@ -564,6 +571,8 @@ def logout_view(request):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required
+@user_passes_test(is_superuser)
+@user_passes_test(is_staff)
 def edit_item(request, item_type, item_id):
     if item_type == 'client':
         item = get_object_or_404(Client, id=item_id)
