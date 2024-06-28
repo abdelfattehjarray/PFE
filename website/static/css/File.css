@@ -297,6 +297,7 @@ body {
   border-radius: 5px;
   margin: 70px;
   width: 60%;
+  max-width: 1000px;
   margin-left: 270;
   height: 700px; /* Set your desired height */
   overflow-y: auto;
