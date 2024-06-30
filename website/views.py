@@ -258,12 +258,15 @@ def login_view(request):
 
         user = authenticate(request, username=email, password=password)
         if user is not None:
-            login(request, user)
-            # Redirect to a success page (e.g., home)
-            return redirect('home')
+            if user.is_active:
+                login(request, user)
+                # Redirect to a success page (e.g., home)
+                return redirect('home')
+            
+            
         else:
             # Add an error message to the context
-            messages.error(request, 'Wrong username or password, try again!')
+            messages.error(request, 'Wrong username or password, or account is not active !')
             return redirect('user')
     else:
         return render(request, 'user.html')
@@ -491,29 +494,37 @@ def activate_user(request):
     if request.method == 'POST':
         user_id = request.POST.get('id')
         permission = request.POST.get('permission')
+        
 
         try:
             user = User.objects.get(pk=user_id)
-            user.is_active = True
+            if permission in ['staff', 'superuser', 'viewer']:
+             user.is_active = True
 
-            if permission == 'staff':
+             if permission == 'staff':
                 user.is_staff = True
                 user.is_superuser = False
-            elif permission == 'superuser':
+             elif permission == 'superuser':
                 user.is_staff = True  # Superusers are always staff
                 user.is_superuser = True
+             
+                
 
-            user.save()
+             user.save()
 
 
-            subject = 'Your account is now active!'
-            message = f"Hello {user.username},\n\nYour account is now active. You can now log in to the system.\n\nBest regards,\nThe FSG Team"
-            from_email = EMAIL_HOST_USER
-            recipient_list = [user.email]
-            send_mail(subject, message, from_email, recipient_list)
-            return redirect('userinterface')  # Redirect to the userinterface view
+             subject = 'Your account is now active!'
+             message = f"Hello {user.username},\n\nYour account is now active. You can now log in to the system.\n\nBest regards,\nThe FSG Team"
+             from_email = EMAIL_HOST_USER
+             recipient_list = [user.email]
+             send_mail(subject, message, from_email, recipient_list)
+             return redirect('userinterface')  # Redirect to the userinterface view
+            else:
+                messages.error(request, 'Please select a valid role.')
+                return redirect('userinterface')
         except User.DoesNotExist:
             return render(request, 'userinterface.html', {'error_message': 'User not found'})
+        
     else:
         return render(request, 'userinterface.html', {'error_message': 'Invalid request'})
 def inactivate_user(request):

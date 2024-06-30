@@ -247,12 +247,12 @@ form.sign-in-form {
 
 .left-panel {
   pointer-events: all;
-  padding: 12.5rem 17% 2rem 12%;
+  padding: 12.5rem 17% 12rem 7%;
 }
 
 .right-panel {
   pointer-events: none;
-  padding: 9rem 12% 2rem 17%;
+  padding: 9rem 12% 12rem 17%;
 }
 
 .panel .content {
